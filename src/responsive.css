@@ -1,0 +1,286 @@
+/* =========================================================================
+   responsive.css
+   Global Mobile Overrides for FOODFLOW
+   Rule #1: NEVER alter the desktop layout.
+   Rule #2: ONLY target screens <= 768px.
+   ========================================================================= */
+
+@media (max-width: 768px) {
+  /* -----------------------------------------------------------
+     GLOBAL RESETS 
+     ----------------------------------------------------------- */
+  body, html {
+    overflow-x: hidden;
+    width: 100%;
+    max-width: 100vw;
+  }
+
+  * {
+    max-width: 100vw !important;
+  }
+
+  /* Exclude elements that legitimately need horizontal scroll */
+  .mobile-scroll-x, 
+  .mobile-scroll-x * {
+    max-width: none !important;
+  }
+
+  /* Increase Touch Targets */
+  button, a, input, select {
+    min-height: 44px;
+  }
+  
+  /* Tables */
+  table {
+    display: block;
+    width: 100%;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    white-space: nowrap;
+  }
+
+  /* Bottom Nav Padding */
+  .customer-layout-wrapper {
+    padding-bottom: calc(65px + env(safe-area-inset-bottom, 0px)) !important;
+  }
+
+  /* Cart Mobile Sticky CTA */
+  .cart-checkout-cta-wrapper {
+    position: fixed;
+    bottom: calc(65px + env(safe-area-inset-bottom, 0px));
+    left: 0;
+    right: 0;
+    padding: 1rem;
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border-top: 1px solid rgba(0,0,0,0.05);
+    z-index: 100;
+  }
+  .cart-checkout-btn {
+    margin-top: 0 !important;
+  }
+  .cart-checkout-total {
+    display: inline !important;
+  }
+
+  /* Footer container padding */
+  .container {
+    padding-left: 1.5rem !important;
+    padding-right: 1.5rem !important;
+  }
+
+  /* -----------------------------------------------------------
+     ADMIN & RESTAURANT LAYOUTS
+     ----------------------------------------------------------- */
+  .admin-layout, .resto-layout {
+    flex-direction: column !important;
+  }
+
+/* ── Restaurant Panel Mobile Rules ── */
+@media (max-width: 900px) {
+  .resto-sidebar {
+    display: none !important;
+  }
+  .resto-main-fade {
+    left: 0 !important;
+  }
+  .resto-main-content {
+    padding: 1rem !important;
+    padding-bottom: calc(85px + env(safe-area-inset-bottom, 0px)) !important; /* Bottom Nav Space */
+  }
+  .bento-card {
+    grid-column: span 12 !important; /* Stack bento grid on mobile */
+  }
+}
+
+  .admin-sidebar, .resto-sidebar {
+    width: 100% !important;
+    height: auto !important;
+    border-right: none !important;
+    border-bottom: 1px solid var(--glass-border-light) !important;
+    position: sticky !important;
+    top: 0;
+    z-index: 100 !important;
+  }
+
+  .admin-sidebar-header, .resto-sidebar-header {
+    padding: 1rem !important;
+  }
+
+  /* Make nav horizontal and scrollable */
+  .admin-sidebar-nav, .resto-sidebar-nav {
+    display: flex !important;
+    flex-direction: row !important;
+    overflow-x: auto !important;
+    padding: 0.5rem 1rem !important;
+    gap: 0.5rem !important;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .admin-sidebar-nav > a, .resto-sidebar-nav > a {
+    margin-bottom: 0 !important;
+    white-space: nowrap !important;
+    padding: 0.5rem 1rem !important;
+  }
+
+  /* Hide decorative top glow on mobile horizontal nav */
+  .resto-sidebar-glow {
+    display: none !important;
+  }
+
+  /* Hide titles in horizontal nav */
+  .nav-group-title {
+    display: none !important;
+  }
+
+  /* Hide user card in sidebar on mobile to save space */
+  .admin-sidebar-footer, .resto-sidebar-footer {
+    display: none !important;
+  }
+
+  .admin-main, .resto-main-content {
+    padding: 1rem !important;
+  }
+
+  .resto-main-fade {
+    display: none !important;
+  }
+
+  /* Header adjustments for dashboards */
+  header.flex-between {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1rem;
+  }
+
+  /* Food Card */
+  .food-card {
+    flex-direction: column !important;
+    gap: 0.5rem !important;
+  }
+  .food-card-img-container {
+    width: 100% !important;
+    height: 180px !important;
+    order: -1; /* Put image on top */
+  }
+
+  /* Landing Page */
+  .landing-nav-links {
+    flex-wrap: wrap !important;
+    justify-content: center !important;
+  }
+  .hero-image-row {
+    grid-template-columns: 1fr !important;
+  }
+  .hero-buttons {
+    flex-direction: column !important;
+    width: 100% !important;
+  }
+  .hero-buttons a, .hero-buttons button {
+    width: 100% !important;
+    justify-content: center !important;
+  }
+
+  /* Customer Home Page */
+  .home-bento-grid {
+    display: flex !important;
+    flex-direction: column !important;
+  }
+  .home-bento-item {
+    width: 100% !important;
+  }
+
+  /* Customer Search Page */
+  .search-input-wrapper {
+    flex-direction: column !important;
+    padding: 0.5rem !important;
+    border-radius: 12px !important;
+  }
+  .search-input-wrapper input {
+    width: 100% !important;
+    text-align: center !important;
+  }
+  .search-btn {
+    width: 100% !important;
+    border-radius: 8px !important;
+  }
+  .search-header-flex {
+    flex-direction: column !important;
+    align-items: flex-start !important;
+    gap: 1rem !important;
+  }
+
+  /* Restaurant Details Page */
+  .resto-details-nav {
+    flex-direction: column !important;
+    align-items: stretch !important;
+    gap: 1rem !important;
+  }
+  .resto-details-nav > div:last-child {
+    min-width: 0 !important;
+    width: 100% !important;
+  }
+  .menu-grid {
+    grid-template-columns: 1fr !important;
+  }
+
+  /* Bento Grid for Admin and Restaurant Dashboards */
+  .bento-grid {
+    display: flex !important;
+    flex-direction: column !important;
+  }
+  .bento-card {
+    width: 100% !important;
+  }
+  /* Order Tracking Page */
+  .tracking-grid {
+    grid-template-columns: 1fr !important;
+  }
+
+  /* Cart Page */
+  .cart-right-panel {
+    flex-basis: 100% !important;
+  }
+
+  /* Profile Page */
+  .profile-add-money-grid {
+    grid-template-columns: repeat(2, 1fr) !important;
+  }
+
+  /* Restaurant Panel Layouts */
+  .settings-layout {
+    flex-direction: column !important;
+  }
+  .settings-sidebar {
+    flex: 1 1 auto !important;
+    width: 100% !important;
+    flex-direction: row !important;
+    overflow-x: auto !important;
+    white-space: nowrap !important;
+  }
+  .review-breakdown {
+    flex-direction: column !important;
+    gap: 1.5rem !important;
+  }
+  .review-item {
+    flex-direction: column !important;
+  }
+  .review-reply-action {
+    flex-direction: column !important;
+  }
+  .offer-modal-grid {
+    flex-direction: column !important;
+  }
+
+  /* Admin Panel Layouts */
+  .admin-dashboard-flex {
+    flex-direction: column !important;
+  }
+  .admin-settings-layout {
+    flex-direction: column !important;
+  }
+  .admin-settings-fees {
+    flex-direction: column !important;
+  }
+}
