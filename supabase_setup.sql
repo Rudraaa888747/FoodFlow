@@ -3,6 +3,8 @@
 -- 1. Users Table
 CREATE TABLE IF NOT EXISTS public.users (
   email TEXT PRIMARY KEY,
+  name TEXT,
+  phone TEXT,
   password TEXT NOT NULL,
   role TEXT DEFAULT 'customer',
   "walletBalance" NUMERIC DEFAULT 0,
