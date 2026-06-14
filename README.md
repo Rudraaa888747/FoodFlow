@@ -1,5 +1,5 @@
 <div align="center">
-  <img src="https://raw.githubusercontent.com/Rudraaa888747/FoodFlow/main/public/favicon.ico" alt="FoodFlow Logo" width="80" height="80">
+  <img src="https://raw.githubusercontent.com/Rudraaa888747/FoodFlow/main/public/favicon.svg" alt="FoodFlow Logo" width="80" height="80">
   <h1 align="center">FoodFlow</h1>
   <p align="center">
     <strong>A Premium, Full-Stack Food Delivery & Restaurant Management Platform</strong>
