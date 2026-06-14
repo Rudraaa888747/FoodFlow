@@ -203,8 +203,9 @@ export const useStore = create(
          let driver = order.driver;
          if ((status === 'Ready' || status === 'Out For Delivery') && !driver) {
            const DRIVERS = [
-             { id: 'd1', name: 'Rahul Sharma', rating: 4.9, deliveries: 1240, phone: '+91 9876543210' },
-             { id: 'd2', name: 'Amit Kumar', rating: 4.7, deliveries: 850, phone: '+91 9876543211' }
+             { id: 'd1', name: 'Rahul Sharma', rating: 4.9, deliveries: 1240, phone: '+91 9876543210', avatar: 'https://i.pravatar.cc/150?img=11' },
+             { id: 'd2', name: 'Amit Kumar', rating: 4.7, deliveries: 850, phone: '+91 9876543211', avatar: 'https://i.pravatar.cc/150?img=12' },
+             { id: 'd3', name: 'Vikram Singh', rating: 4.8, deliveries: 920, phone: '+91 9876543212', avatar: 'https://i.pravatar.cc/150?img=13' }
            ];
            driver = DRIVERS[Math.floor(Math.random() * DRIVERS.length)];
            newTimeline.push({ status: 'Driver Assigned', timestamp, description: `Driver ${driver.name} assigned` });
