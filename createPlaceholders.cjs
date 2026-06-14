@@ -30,3 +30,4 @@ Object.entries(files).forEach(([filePath, content]) => {
 });
 
 console.log('Placeholders created successfully.');
+

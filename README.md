@@ -1,61 +1,100 @@
-# FoodFlow - Food Delivery & Restaurant Management App
+<div align="center">
+  <img src="https://raw.githubusercontent.com/Rudraaa888747/FoodFlow/main/public/favicon.ico" alt="FoodFlow Logo" width="80" height="80">
+  <h1 align="center">FoodFlow</h1>
+  <p align="center">
+    <strong>A Premium, Full-Stack Food Delivery & Restaurant Management Platform</strong>
+    <br />
+    Built with React, Zustand, Framer Motion, and Supabase Realtime
+  </p>
+</div>
 
-FoodFlow is a modern, full-stack web application designed for food delivery and restaurant management. It features a seamless customer experience, a robust restaurant dashboard, and an administrative panel, all powered by real-time updates.
+---
 
-## 🚀 Features
+<p align="center">
+  <img src="https://img.shields.io/badge/React-20232A?style=for-the-badge&logo=react&logoColor=61DAFB" alt="React" />
+  <img src="https://img.shields.io/badge/Vite-B73BFE?style=for-the-badge&logo=vite&logoColor=FFD62E" alt="Vite" />
+  <img src="https://img.shields.io/badge/Tailwind_CSS-38B2AC?style=for-the-badge&logo=tailwind-css&logoColor=white" alt="Tailwind" />
+  <img src="https://img.shields.io/badge/Supabase-181818?style=for-the-badge&logo=supabase&logoColor=white" alt="Supabase" />
+  <img src="https://img.shields.io/badge/Framer_Motion-0055FF?style=for-the-badge&logo=framer&logoColor=white" alt="Framer Motion" />
+</p>
 
-- **Customer App**: Browse restaurants, add items to cart, place orders, and track them in real-time. Book tables dynamically.
-- **Restaurant Dashboard**: Manage menus, view incoming orders, update order status, and handle table bookings.
-- **Admin Panel**: Monitor platform performance, manage restaurants, and oversee all orders globally.
-- **Real-Time Sync**: Instant order notifications and status updates powered by Supabase Realtime.
-- **Modern UI**: Designed with React, TailwindCSS, and Framer Motion for smooth, native-like animations.
+## 🌟 Overview
 
-## 🛠️ Technology Stack
+FoodFlow is a state-of-the-art web application engineered to bridge the gap between hungry customers, busy restaurants, and platform administrators. It provides a flawlessly synchronized ecosystem where every action—from placing an order to assigning a delivery driver—is updated in real-time across all portals.
 
-- **Frontend**: React (Vite), TailwindCSS, Zustand (State Management), Framer Motion
-- **Backend (BaaS)**: Supabase (PostgreSQL, Authentication, Realtime Channels)
-- **Deployment Ready**: Fully optimized for Vercel deployment.
+### ✨ Key Capabilities
 
-## 📦 Getting Started
+*   🍔 **Customer Portal**: A native-like, frictionless ordering experience with live GPS-style order tracking, interactive menus, table booking, and an integrated wallet system.
+*   👨‍🍳 **Restaurant Dashboard**: A dedicated OS for restaurants to accept/prepare orders, manage menus, and monitor daily revenue—instantly synced without manual refreshing.
+*   👑 **Admin Command Center**: A bird's-eye view for platform owners to oversee all active orders, manage restaurant onboarding, and analyze platform-wide metrics.
+*   ⚡ **Zero-Latency Realtime**: Powered by Supabase PostgreSQL WebSockets, ensuring cross-tab and cross-device synchronization in milliseconds.
 
-### Prerequisites
-- Node.js (v18+ recommended)
-- A [Supabase](https://supabase.com/) account.
+---
 
-### Installation
+## 📸 Platform Previews
 
-1. **Clone the repository:**
-   ```bash
-   git clone https://github.com/Rudraaa888747/FoodFlow.git
-   cd FoodFlow
-   ```
+### Customer Experience
+*Immersive UI with Framer Motion transitions, cart management, and instant order success pop-ups.*
 
-2. **Install dependencies:**
-   ```bash
-   npm install
-   ```
+### Order Tracking
+*Live timeline tracking showing status updates from Pending to Out for Delivery, complete with dynamic driver assignments.*
 
-3. **Set up Environment Variables:**
-   - Copy `.env.example` to `.env`.
-   - Update the values with your Supabase credentials:
-     ```env
-     VITE_SUPABASE_URL=your_project_url
-     VITE_SUPABASE_ANON_KEY=your_anon_key
-     ```
+### Restaurant Operating System (Resto Hub)
+*A sleek, dark-mode dashboard for restaurant partners to manage incoming order pipelines with optimistic UI updates.*
 
-4. **Database Setup:**
-   - Go to your Supabase project's SQL Editor.
-   - Run the provided `supabase_setup.sql` file to create the necessary tables (`users`, `orders`, `bookings`, `notifications`) and enable Realtime.
+---
 
-5. **Run the Development Server:**
-   ```bash
-   npm run dev
-   ```
+## 🛠️ Technical Architecture
 
-## 🚀 Deployment
+| Layer | Technology | Purpose |
+| :--- | :--- | :--- |
+| **Frontend Framework** | React 18 + Vite | Blazing fast component rendering and HMR. |
+| **Styling Engine** | TailwindCSS | Utility-first, highly customizable design system. |
+| **State Management** | Zustand | Lightweight, persistent client-side state without Redux boilerplate. |
+| **Animations** | Framer Motion | Fluid spring-physics animations and layout transitions. |
+| **Backend & Auth** | Supabase | Secure authentication and Row Level Security (RLS). |
+| **Database** | PostgreSQL | Relational data structuring for users, orders, and notifications. |
+| **Realtime Sync** | Supabase Channels | WebSockets for instant data propagation across clients. |
 
-FoodFlow is optimized for serverless deployments on platforms like Vercel. 
-Simply connect your GitHub repository to Vercel and ensure your environment variables are configured in the Vercel dashboard.
+---
 
-## 📄 License
-This project is for educational and portfolio purposes.
+## 🚀 Getting Started
+
+### 1. Clone & Install
+```bash
+git clone https://github.com/Rudraaa888747/FoodFlow.git
+cd FoodFlow
+npm install
+```
+
+### 2. Environment Setup
+Create a `.env` file in the root directory and add your Supabase credentials (see `.env.example`):
+```env
+VITE_SUPABASE_URL=your_supabase_project_url
+VITE_SUPABASE_ANON_KEY=your_supabase_anon_key
+SUPABASE_SERVICE_ROLE_KEY=your_service_role_key
+```
+
+### 3. Database Initialization
+Run the provided `supabase_setup.sql` script in your Supabase SQL Editor. This will generate the necessary tables (`users`, `orders`, `bookings`, `notifications`) and enable the required `REPLICA IDENTITY FULL` settings for Realtime.
+
+### 4. Ignite the Server
+```bash
+npm run dev
+```
+
+---
+
+## 🌐 Deployment (Vercel)
+
+FoodFlow is fully optimized for Edge networks. 
+1. Push your code to GitHub.
+2. Import the repository in **Vercel**.
+3. Add the three environment variables from your `.env` file into the Vercel project settings.
+4. Click **Deploy**.
+
+---
+
+<div align="center">
+  <p>Built with ❤️ by Rudra</p>
+</div>
