@@ -499,6 +499,7 @@ export default function Profile() {
                           <>
                             <motion.button
                               whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.97 }}
+                              onClick={() => showToast('🚧 Rating feature is coming soon!', 'info')}
                               style={{
                                 display: 'flex', alignItems: 'center', gap: '0.4rem',
                                 background: 'transparent', color: '#6B6B66',
@@ -864,7 +865,7 @@ export default function Profile() {
                   <button onClick={() => setAddresses(addresses.filter(a => a.id !== addr.id))} style={{ background: 'none', border: 'none', cursor: 'pointer', color: '#C0BFB9' }}><Trash2 size={16}/></button>
                 </div>
               ))}
-              <button onClick={() => showToast('Address addition flows here')} style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '0.5rem', background: 'var(--bg-primary)', border: '1.5px dashed #E8E7E4', padding: '1rem', borderRadius: '12px', fontWeight: 700, color: 'var(--text-primary)', cursor: 'pointer', marginTop: '0.5rem' }}>
+              <button onClick={() => showToast('🚧 Address addition is coming soon!', 'info')} style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '0.5rem', background: 'var(--bg-primary)', border: '1.5px dashed #E8E7E4', padding: '1rem', borderRadius: '12px', fontWeight: 700, color: 'var(--text-primary)', cursor: 'pointer', marginTop: '0.5rem' }}>
                 <Plus size={16} /> Add New Address
               </button>
             </div>
@@ -886,7 +887,7 @@ export default function Profile() {
                   <button onClick={() => setPayments(payments.filter(p => p.id !== pay.id))} style={{ background: 'none', border: 'none', cursor: 'pointer', color: '#C0BFB9' }}><Trash2 size={16}/></button>
                 </div>
               ))}
-              <button onClick={() => showToast('Payment addition flows here')} style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '0.5rem', background: 'var(--bg-primary)', border: '1.5px dashed #E8E7E4', padding: '1rem', borderRadius: '12px', fontWeight: 700, color: 'var(--text-primary)', cursor: 'pointer', marginTop: '0.5rem' }}>
+              <button onClick={() => showToast('🚧 Payment methods coming soon!', 'info')} style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '0.5rem', background: 'var(--bg-primary)', border: '1.5px dashed #E8E7E4', padding: '1rem', borderRadius: '12px', fontWeight: 700, color: 'var(--text-primary)', cursor: 'pointer', marginTop: '0.5rem' }}>
                 <Plus size={16} /> Add Payment Method
               </button>
             </div>

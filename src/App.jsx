@@ -69,6 +69,10 @@ const PageLoader = () => (
 function AnimatedRoutes() {
   const location = useLocation();
   
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [location.pathname]);
+  
   return (
     <AnimatePresence mode="wait">
       <Suspense fallback={<PageLoader />}>

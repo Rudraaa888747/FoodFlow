@@ -21,8 +21,9 @@ export default function RestaurantDetails() {
   const [activeCategory, setActiveCategory] = useState('All');
   const [searchQuery, setSearchQuery] = useState('');
 
-  // Route Prefetching
+  // Route Prefetching & Scroll to top
   useEffect(() => {
+    window.scrollTo(0, 0);
     import('./Cart');
     import('./Checkout');
   }, []);

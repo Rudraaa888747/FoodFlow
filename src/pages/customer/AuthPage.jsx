@@ -439,7 +439,7 @@ export default function AuthPage() {
             whileHover={{ scale: 1.02, borderColor: '#D0CFCB' }}
             whileTap={{ scale: 0.97 }}
             type="button"
-            onClick={() => { login({ name: 'Google User', email: 'google@foodflow.com' }); navigate('/landing'); }}
+            onClick={() => { toast('🚧 Google login is coming soon!', { icon: '🚧' }); }}
             style={{
               width: '100%', background: 'var(--bg-elevated)',
               border: '1.5px solid #ECEAE6', borderRadius: '14px',
