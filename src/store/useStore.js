@@ -210,8 +210,15 @@ export const useStore = create(
            newTimeline.push({ status: 'Driver Assigned', timestamp, description: `Driver ${driver.name} assigned` });
          }
          
-         const { error } = await supabase.from('orders').update({ status, timeline: newTimeline, driver }).eq('id', orderId);
+         const updatedOrderData = { status, timeline: newTimeline, driver };
+         const { error } = await supabase.from('orders').update(updatedOrderData).eq('id', orderId);
          if (error) return callback && callback({ success: false, error: error.message });
+         
+         // Optimistic UI update so the restaurant dashboard updates instantly
+         const state = get();
+         set({
+           orders: state.orders.map(o => o.id === orderId ? { ...o, ...updatedOrderData } : o)
+         });
          
          let notifMsg = '';
          if (status === 'Confirmed') notifMsg = `Restaurant accepted your order ${order.id}`;
@@ -343,6 +350,17 @@ export const useStore = create(
              let finalNotifs = notifsRes.data;
              if (user.role === 'admin') finalNotifs = finalNotifs.filter(n => n.target === 'admin' || !n.target);
              set({ notifications: finalNotifs });
+         }
+
+         // Handle tab visibility change to catch missed events (e.g. Chrome throttled the background tab)
+         if (typeof window !== 'undefined' && !window.__foodflow_visibility_hook_added) {
+           window.__foodflow_visibility_hook_added = true;
+           window.addEventListener('visibilitychange', () => {
+             if (document.visibilityState === 'visible') {
+               // Refetch when tab becomes visible to avoid stale data from missed socket events
+               useStore.getState().setupRealtime();
+             }
+           });
          }
 
          // 2. Subscriptions
