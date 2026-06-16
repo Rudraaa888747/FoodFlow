@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { LayoutDashboard, Package, Calendar, UtensilsCrossed, Settings } from 'lucide-react';
+import { LayoutDashboard, Package, Calendar, UtensilsCrossed, Settings, Home } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useStore } from '../../store/useStore';
 
@@ -99,7 +99,7 @@ export default function RestoMobileBottomNav() {
       <div style={{ display: 'flex', alignItems: 'center', height: '65px' }}>
         <NavItem
           to="/restaurant"
-          label="Home"
+          label="Dash"
           icon={LayoutDashboard}
           active={location.pathname === '/restaurant'}
         />
@@ -127,6 +127,12 @@ export default function RestoMobileBottomNav() {
           label="Settings"
           icon={Settings}
           active={location.pathname.startsWith('/restaurant/settings')}
+        />
+        <NavItem
+          to="/"
+          label="Website"
+          icon={Home}
+          active={location.pathname === '/'}
         />
       </div>
     </div>

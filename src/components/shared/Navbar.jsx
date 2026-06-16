@@ -111,20 +111,12 @@ export default function Navbar() {
             {/* Desktop Logo (Hidden on mobile to save space for Location) */}
             {!isMobile && (
               <Link to="/customer" style={{ textDecoration: 'none', display: 'flex', alignItems: 'center', gap: '0.55rem', flexShrink: 0 }}>
-                <motion.div
-                  whileHover={{ rotate: 10, scale: 1.08 }}
-                  transition={{ type: 'spring', stiffness: 400, damping: 15 }}
-                  style={{
-                    width: '32px', height: '32px', background: '#FF4D2E',
-                    borderRadius: '9px', display: 'flex', alignItems: 'center', justifyContent: 'center',
-                    boxShadow: '0 4px 10px rgba(255,77,46,0.3)',
-                  }}
-                >
-                  <Zap size={17} color="#FFFFFF" fill="#FFFFFF" />
-                </motion.div>
-                <span style={{ fontSize: '1.2rem', fontWeight: 900, color: 'var(--text-primary)', letterSpacing: '-0.05em' }}>
-                  FOODFLOW
-                </span>
+                <motion.img 
+                  src="/logo.png" 
+                  alt="FoodFlow Logo" 
+                  whileHover={{ scale: 1.05 }}
+                  style={{ height: '38px', width: 'auto', objectFit: 'contain' }} 
+                />
               </Link>
             )}
 
@@ -378,10 +370,7 @@ export default function Navbar() {
                 borderBottom: '1px solid #F0EFEC',
               }}>
                 <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-                  <div style={{ width: '28px', height: '28px', background: '#FF4D2E', borderRadius: '8px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                    <Zap size={15} color="#FFFFFF" fill="#FFFFFF" />
-                  </div>
-                  <span style={{ fontWeight: 900, fontSize: '1.05rem', color: 'var(--text-primary)', letterSpacing: '-0.04em' }}>FOODFLOW</span>
+                  <img src="/logo.png" alt="FoodFlow Logo" style={{ height: '28px', width: 'auto', objectFit: 'contain' }} />
                 </div>
                 <motion.button
                   whileTap={{ scale: 0.9 }}

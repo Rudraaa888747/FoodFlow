@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useStore } from '../../store/useStore';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Mail, Lock, User, ArrowRight, Eye, EyeOff, Zap, CheckCircle2 } from 'lucide-react';
+import { Mail, Lock, User, ArrowRight, Eye, EyeOff, CheckCircle2 } from 'lucide-react';
 import toast from 'react-hot-toast';
 
 // ─── Floating label input ────────────────────────────────────────────────────
@@ -147,7 +147,7 @@ export default function AuthPage() {
     if (!isLogin && !name) { toast.error('Please enter your name.'); return; }
 
     const normEmail = email.trim().toLowerCase();
-    
+
     setLoading(true);
     setTimeout(async () => {
       if (isLogin) {
@@ -219,12 +219,7 @@ export default function AuthPage() {
           initial={{ opacity: 0, y: -16 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5 }}
           style={{ display: 'flex', alignItems: 'center', gap: '0.6rem', padding: '0 3rem' }}
         >
-          <div style={{
-            width: '36px', height: '36px', background: '#FF4D2E',
-            borderRadius: '10px', display: 'flex', alignItems: 'center', justifyContent: 'center',
-          }}>
-            <Zap size={20} color="#FFFFFF" fill="#FFFFFF" />
-          </div>
+          <img src="/logo.png" alt="FoodFlow Logo" style={{ height: '36px', width: 'auto', objectFit: 'contain', borderRadius: '8px' }} />
           <span style={{ fontSize: '1.3rem', fontWeight: 900, color: '#FFFFFF', letterSpacing: '-0.04em' }}>FOODFLOW</span>
         </motion.div>
 
@@ -371,7 +366,7 @@ export default function AuthPage() {
             {/* Forgot password */}
             {isLogin && (
               <div style={{ textAlign: 'right', marginTop: '-0.25rem' }}>
-                <button type="button" style={{ background: 'none', border: 'none', color: 'var(--text-secondary)', fontSize: '0.82rem', cursor: 'pointer', fontWeight: 500 }}>
+                <button type="button" onClick={() => toast(' Password reset coming soon!', { icon: '🔐' })} style={{ background: 'none', border: 'none', color: 'var(--text-secondary)', fontSize: '0.82rem', cursor: 'pointer', fontWeight: 500 }}>
                   Forgot password?
                 </button>
               </div>
@@ -439,7 +434,7 @@ export default function AuthPage() {
             whileHover={{ scale: 1.02, borderColor: '#D0CFCB' }}
             whileTap={{ scale: 0.97 }}
             type="button"
-            onClick={() => { toast('🚧 Google login is coming soon!', { icon: '🚧' }); }}
+            onClick={() => { toast(' Google login is coming soon!'); }}
             style={{
               width: '100%', background: 'var(--bg-elevated)',
               border: '1.5px solid #ECEAE6', borderRadius: '14px',
@@ -489,9 +484,9 @@ export default function AuthPage() {
           {/* Terms */}
           <p style={{ textAlign: 'center', marginTop: '1.75rem', fontSize: '0.75rem', color: '#C0BFB9', lineHeight: 1.6 }}>
             By continuing, you agree to FoodFlow's{' '}
-            <a href="#" style={{ color: 'var(--text-secondary)', textDecoration: 'underline', textUnderlineOffset: '2px' }}>Terms</a>
+            <a href="#" onClick={(e) => { e.preventDefault(); toast(' Terms coming soon!'); }} style={{ color: 'var(--text-secondary)', textDecoration: 'underline', textUnderlineOffset: '2px' }}>Terms</a>
             {' & '}
-            <a href="#" style={{ color: 'var(--text-secondary)', textDecoration: 'underline', textUnderlineOffset: '2px' }}>Privacy Policy</a>.
+            <a href="#" onClick={(e) => { e.preventDefault(); toast(' Privacy Policy coming soon!'); }} style={{ color: 'var(--text-secondary)', textDecoration: 'underline', textUnderlineOffset: '2px' }}>Privacy Policy</a>.
           </p>
         </motion.div>
       </div>

@@ -158,8 +158,8 @@ export default function Checkout() {
         @media (max-width: 960px) {
           .checkout-container { flex-direction: column; gap: 1.5rem; }
           .checkout-left { width: 100%; }
-          .checkout-right { width: 100%; position: relative; top: 0; padding-bottom: 80px; }
-          .mobile-sticky-btn { display: block; position: fixed; bottom: 0; left: 0; right: 0; padding: 1rem 5%; background: #fff; box-shadow: 0 -4px 20px rgba(0,0,0,0.08); z-index: 50; border-top: 1px solid #e2e8f0; }
+          .checkout-right { width: 100%; position: relative; top: 0; padding-bottom: 140px; }
+          .mobile-sticky-btn { display: block; position: fixed; bottom: calc(68px + env(safe-area-inset-bottom, 0px)); left: 0; right: 0; padding: 1rem 5%; background: #fff; box-shadow: 0 -4px 20px rgba(0,0,0,0.08); z-index: 50; border-top: 1px solid #e2e8f0; }
           .desktop-btn { display: none !important; }
           .glass-card { padding: 1.25rem !important; }
           .step-circle { width: 30px !important; height: 30px !important; font-size: 0.8rem !important; }
@@ -263,13 +263,13 @@ export default function Checkout() {
                 </button>
               </motion.div>
             ) : step > 1 ? (
-              <div className="glass-card" style={{ padding: '1.25rem 2rem', display: 'flex', justifyContent: 'space-between', alignItems: 'center', cursor: 'pointer', border: '1px solid #e2e8f0' }} onClick={() => setStep(1)}>
+              <button aria-label="Review cart items" className="glass-card" style={{ width: '100%', textAlign: 'left', appearance: 'none', padding: '1.25rem 2rem', display: 'flex', justifyContent: 'space-between', alignItems: 'center', cursor: 'pointer', border: '1px solid #e2e8f0', background: '#fff' }} onClick={() => setStep(1)}>
                  <div>
                    <h3 style={{ fontSize: '1rem', fontWeight: 800, margin: 0, color: 'var(--text-primary)', display: 'flex', alignItems: 'center', gap: '0.5rem' }}><CheckCircle size={18} color="#10b981" /> Cart Items</h3>
                    <p style={{ margin: '0.25rem 0 0 1.75rem', fontSize: '0.85rem', color: 'var(--text-secondary)', fontWeight: 600 }}>{cart.length} items added</p>
                  </div>
-                 <button style={{ border: 'none', background: 'var(--bg-secondary)', color: '#FF6B35', fontWeight: 800, padding: '0.5rem 1rem', borderRadius: '8px', cursor: 'pointer', fontSize: '0.8rem' }}>Change</button>
-              </div>
+                 <div style={{ border: 'none', background: 'var(--bg-secondary)', color: '#FF6B35', fontWeight: 800, padding: '0.5rem 1rem', borderRadius: '8px', cursor: 'pointer', fontSize: '0.8rem' }}>Change</div>
+              </button>
             ) : null}
 
             {/* STEP 2: ADDRESS */}
@@ -303,7 +303,7 @@ export default function Checkout() {
                     <motion.div key="view" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}>
                       <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem', marginBottom: '1.5rem' }}>
                         {addresses.map(addr => (
-                          <div key={addr.id} onClick={() => setSelectedAddressId(addr.id)} style={{ border: `2px solid ${selectedAddressId === addr.id ? '#FF6B35' : 'var(--glass-border)'}`, borderRadius: '16px', padding: '1.25rem', position: 'relative', background: selectedAddressId === addr.id ? '#fff5f2' : '#fff', cursor: 'pointer', transition: 'all 0.2s' }}>
+                          <button aria-label={`Select address ${addr.type}`} key={addr.id} onClick={() => setSelectedAddressId(addr.id)} style={{ width: '100%', textAlign: 'left', appearance: 'none', border: `2px solid ${selectedAddressId === addr.id ? '#FF6B35' : 'var(--glass-border)'}`, borderRadius: '16px', padding: '1.25rem', position: 'relative', background: selectedAddressId === addr.id ? '#fff5f2' : '#fff', cursor: 'pointer', transition: 'all 0.2s' }}>
                             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '0.5rem' }}>
                               <span style={{ background: selectedAddressId === addr.id ? '#FF6B35' : 'var(--bg-tertiary)', color: selectedAddressId === addr.id ? '#fff' : '#0f172a', fontSize: '0.7rem', fontWeight: 800, padding: '0.25rem 0.75rem', borderRadius: '999px', letterSpacing: '0.05em' }}>{addr.type}</span>
                               <div style={{ display: 'flex', gap: '0.5rem', alignItems: 'center' }}>
@@ -312,7 +312,7 @@ export default function Checkout() {
                               </div>
                             </div>
                             <p style={{ color: 'var(--text-primary)', fontSize: '0.95rem', lineHeight: 1.5, margin: 0, fontWeight: 500 }}>{addr.text}</p>
-                          </div>
+                          </button>
                         ))}
                       </div>
                       
@@ -328,13 +328,13 @@ export default function Checkout() {
                 </AnimatePresence>
               </motion.div>
             ) : step > 2 ? (
-              <div className="glass-card" style={{ padding: '1.25rem 2rem', display: 'flex', justifyContent: 'space-between', alignItems: 'center', cursor: 'pointer', border: '1px solid #e2e8f0' }} onClick={() => setStep(2)}>
+              <button aria-label="Review delivery details" className="glass-card" style={{ width: '100%', textAlign: 'left', appearance: 'none', padding: '1.25rem 2rem', display: 'flex', justifyContent: 'space-between', alignItems: 'center', cursor: 'pointer', border: '1px solid #e2e8f0', background: '#fff' }} onClick={() => setStep(2)}>
                  <div>
                    <h3 style={{ fontSize: '1rem', fontWeight: 800, margin: 0, color: 'var(--text-primary)', display: 'flex', alignItems: 'center', gap: '0.5rem' }}><CheckCircle size={18} color="#10b981" /> Delivery Details</h3>
                    <p style={{ margin: '0.25rem 0 0 1.75rem', fontSize: '0.85rem', color: 'var(--text-secondary)', fontWeight: 600, whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis', maxWidth: '200px' }}>{addresses.find(a => a.id === selectedAddressId)?.text || ''}</p>
                  </div>
-                 <button style={{ border: 'none', background: 'var(--bg-secondary)', color: '#FF6B35', fontWeight: 800, padding: '0.5rem 1rem', borderRadius: '8px', cursor: 'pointer', fontSize: '0.8rem' }}>Change</button>
-              </div>
+                 <div style={{ border: 'none', background: 'var(--bg-secondary)', color: '#FF6B35', fontWeight: 800, padding: '0.5rem 1rem', borderRadius: '8px', cursor: 'pointer', fontSize: '0.8rem' }}>Change</div>
+              </button>
             ) : null}
 
             {/* STEP 3: PAYMENT */}

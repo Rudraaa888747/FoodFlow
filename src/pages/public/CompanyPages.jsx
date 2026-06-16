@@ -1,6 +1,7 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import { MapPin, Mail, Phone, ArrowRight, Shield, FileText } from 'lucide-react';
+import toast from 'react-hot-toast';
 
 const PageLayout = ({ title, subtitle, children }) => (
   <div style={{ background: 'var(--bg-primary)', minHeight: '100vh', paddingTop: '4rem', paddingBottom: '6rem' }}>
@@ -46,7 +47,7 @@ export const AboutUs = () => (
     <style>{textStyles}</style>
     <h2>Our Story</h2>
     <p>Founded in 2026, FoodFlow started with a simple belief: getting great food should be as enjoyable as eating it. We were tired of clunky apps, cold deliveries, and limited choices. We wanted to build a platform that treated local restaurants as partners and customers as guests.</p>
-    
+
     <h2>Our Values</h2>
     <div style={{ display: 'grid', gap: '2rem', marginTop: '2rem' }}>
       {[
@@ -69,7 +70,7 @@ export const Careers = () => (
     <div style={{ textAlign: 'center', padding: '4rem 2rem', background: 'var(--bg-elevated)', borderRadius: '32px', border: '1px solid var(--glass-border)' }}>
       <h2 style={{ margin: '0 0 1rem' }}>No open roles right now</h2>
       <p style={{ margin: '0 0 2rem' }}>We're currently fully staffed, but we're always looking for exceptional talent. Check back soon!</p>
-      <button style={{ background: 'var(--text-primary)', color: 'var(--bg-primary)', padding: '0.8rem 1.5rem', borderRadius: '12px', fontWeight: 700, border: 'none' }}>
+      <button onClick={() => toast(' Job alerts coming soon!', { icon: '💼' })} style={{ background: 'var(--text-primary)', color: 'var(--bg-primary)', padding: '0.8rem 1.5rem', borderRadius: '12px', fontWeight: 700, border: 'none' }}>
         Notify me of openings
       </button>
     </div>
@@ -137,13 +138,13 @@ export const TermsConditions = () => (
   <LegalTemplate title="Terms & Conditions" lastUpdated="June 1, 2026">
     <h2>1. Acceptance of Terms</h2>
     <p>By accessing and using FoodFlow, you accept and agree to be bound by the terms and provision of this agreement. In addition, when using these particular services, you shall be subject to any posted guidelines or rules applicable to such services.</p>
-    
+
     <h2>2. User Registration</h2>
     <p>To use certain features of the service, you may be required to register for an account. You agree to provide accurate, current, and complete information during the registration process and to update such information to keep it accurate, current, and complete.</p>
-    
+
     <h2>3. Ordering and Payment</h2>
     <p>When you place an order through FoodFlow, you are offering to purchase the items you have selected. All orders are subject to availability and confirmation of the order price.</p>
-    
+
     <h2>4. Liability</h2>
     <p>FoodFlow shall not be liable for any special or consequential damages that result from the use of, or the inability to use, the services and products offered on this site.</p>
   </LegalTemplate>
@@ -153,10 +154,10 @@ export const PrivacyPolicy = () => (
   <LegalTemplate title="Privacy Policy" lastUpdated="June 1, 2026">
     <h2>1. Information We Collect</h2>
     <p>We collect information you provide directly to us, such as when you create or modify your account, request on-demand services, contact customer support, or otherwise communicate with us.</p>
-    
+
     <h2>2. How We Use Your Information</h2>
     <p>We may use the information we collect about you to provide, maintain, and improve our services, including to facilitate payments, send receipts, provide products and services you request, and develop new features.</p>
-    
+
     <h2>3. Sharing of Information</h2>
     <p>We may share the information we collect about you as described in this policy or as described at the time of collection or sharing, including with restaurants to fulfill your orders.</p>
   </LegalTemplate>
@@ -166,10 +167,10 @@ export const CookiePolicy = () => (
   <LegalTemplate title="Cookie Policy" lastUpdated="June 1, 2026">
     <h2>What are cookies?</h2>
     <p>Cookies are small text files that are placed on your computer or mobile device when you browse websites. They are widely used to make websites work, or work more efficiently, as well as to provide information to the owners of the site.</p>
-    
+
     <h2>How we use cookies</h2>
     <p>We use cookies to understand how you use our site and to improve your experience. This includes personalizing content and advertising. By continuing to use our site, you accept our use of cookies.</p>
-    
+
     <h2>Managing cookies</h2>
     <p>Most web browsers allow some control of most cookies through the browser settings. To find out more about cookies, including how to see what cookies have been set, visit www.aboutcookies.org.</p>
   </LegalTemplate>
@@ -179,13 +180,13 @@ export const RefundPolicy = () => (
   <LegalTemplate title="Refund Policy" lastUpdated="June 1, 2026">
     <h2>1. Order Cancellation</h2>
     <p>You may cancel an order before the restaurant has accepted it. Once the restaurant begins preparing your food, the order cannot be cancelled and no refund will be issued.</p>
-    
+
     <h2>2. Missing or Incorrect Items</h2>
     <p>If your order has missing or incorrect items, please contact customer support within 24 hours of delivery. We will issue a partial or full refund to your original payment method based on the situation.</p>
-    
+
     <h2>3. Quality Issues</h2>
     <p>If you are unsatisfied with the quality of your food, please contact us immediately. We investigate all quality complaints and may issue a refund or account credit at our discretion.</p>
-    
+
     <h2>4. Refund Processing Time</h2>
     <p>Approved refunds are processed immediately but may take 5-7 business days to appear on your bank or credit card statement depending on your financial institution.</p>
   </LegalTemplate>

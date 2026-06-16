@@ -57,14 +57,7 @@ export default function Footer() {
           {/* Brand */}
           <div>
             <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', marginBottom: '1rem' }}>
-              <div style={{
-                width: '32px', height: '32px', borderRadius: '8px',
-                background: 'var(--accent)', display: 'flex',
-                alignItems: 'center', justifyContent: 'center', flexShrink: 0,
-              }}>
-                <Utensils size={16} color="#fff" />
-              </div>
-              <h2 className="text-gradient-accent" style={{ margin: 0, fontSize: '1.25rem' }}>FOODFLOW</h2>
+              <img src="/logo.png" alt="FoodFlow Logo" style={{ height: '40px', width: 'auto', objectFit: 'contain' }} />
             </div>
             <p className="text-secondary" style={{ marginBottom: '1.5rem', maxWidth: '280px', fontSize: '0.9rem', lineHeight: 1.7, marginLeft: '40px' }}>
               The premium food ordering experience for Ahmedabad. Quality food, fast delivery.

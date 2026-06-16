@@ -8,6 +8,10 @@ import {
 } from 'lucide-react';
 import { useStore } from '../../store/useStore';
 import { useNavigate } from 'react-router-dom';
+import OrderHistory from '../../components/customer/profile/OrderHistory';
+import WalletSection from '../../components/customer/profile/WalletSection';
+import BookingsSection from '../../components/customer/profile/BookingsSection';
+import AccountSettings from '../../components/customer/profile/AccountSettings';
 
 // ─── tiny sparkline bar chart ───────────────────────────────────────────────
 function SparkBars({ data, color = '#FF4D2E' }) {
@@ -31,29 +35,7 @@ function SparkBars({ data, color = '#FF4D2E' }) {
   );
 }
 
-// ─── order status pill ───────────────────────────────────────────────────────
-function StatusPill({ status }) {
-  const map = {
-    Delivered: { bg: '#ECFDF5', color: '#059669', icon: <CheckCircle2 size={12} /> },
-    Preparing: { bg: '#FFF7ED', color: '#EA580C', icon: <Flame size={12} /> },
-    'Out For Delivery': { bg: '#EFF6FF', color: '#2563EB', icon: <Activity size={12} /> },
-    Ready: { bg: '#fef08a', color: '#854d0e', icon: <CheckCircle2 size={12} /> },
-    Confirmed: { bg: '#e0e7ff', color: '#3730a3', icon: <CheckCircle2 size={12} /> },
-    Pending: { bg: '#F3F4F6', color: '#6B7280', icon: <Clock size={12} /> },
-  };
-  const s = map[status] || map.Pending;
-  return (
-    <span style={{
-      display: 'inline-flex', alignItems: 'center', gap: '4px',
-      background: s.bg, color: s.color,
-      fontSize: '0.72rem', fontWeight: 700,
-      padding: '3px 10px', borderRadius: '9999px',
-      letterSpacing: '0.3px',
-    }}>
-      {s.icon} {status}
-    </span>
-  );
-}
+
 
 // ─── nav tab pill ────────────────────────────────────────────────────────────
 function NavPill({ label, icon, active, onClick, badge }) {
@@ -94,7 +76,7 @@ function SettingModal({ title, onClose, children }) {
   return (
     <div style={{ position: 'fixed', inset: 0, zIndex: 9999, display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '1rem' }}>
       <div style={{ position: 'absolute', inset: 0, background: 'rgba(0,0,0,0.5)', backdropFilter: 'blur(4px)' }} onClick={onClose} />
-      <motion.div 
+      <motion.div
         initial={{ scale: 0.95, opacity: 0 }} animate={{ scale: 1, opacity: 1 }} exit={{ scale: 0.95, opacity: 0 }} transition={{ duration: 0.2 }}
         style={{ background: 'var(--bg-elevated)', width: '100%', maxWidth: '420px', borderRadius: '24px', padding: '2rem', position: 'relative', zIndex: 1, maxHeight: '90vh', overflowY: 'auto' }}
       >
@@ -109,7 +91,7 @@ function SettingModal({ title, onClose, children }) {
 // ─── toggle switch ───────────────────────────────────────────────────────────
 function Toggle({ checked, onChange }) {
   return (
-    <div 
+    <div
       onClick={() => onChange(!checked)}
       style={{ width: '44px', height: '24px', background: checked ? '#FF4D2E' : '#E8E7E4', borderRadius: '999px', position: 'relative', cursor: 'pointer', transition: '0.3s' }}
     >
@@ -375,455 +357,28 @@ export default function Profile() {
 
           {/* ════ ORDERS ════════════════════════════════════════════════════ */}
           {tab === 'orders' && (
-            <motion.div
-              key="orders"
-              variants={stagger} initial="hidden" animate="show" exit={{ opacity: 0 }}
-            >
-              {safeOrders.length === 0 ? (
-                <motion.div
-                  variants={fadeUp}
-                  style={{
-                    background: 'var(--bg-elevated)', borderRadius: '24px',
-                    padding: '5rem 2rem', textAlign: 'center',
-                    border: '1.5px dashed #E8E7E4',
-                  }}
-                >
-                  <div style={{ fontSize: '3rem', marginBottom: '1rem' }}>🛍️</div>
-                  <h3 style={{ fontSize: '1.2rem', fontWeight: 800, color: 'var(--text-primary)', marginBottom: '0.5rem' }}>No orders yet</h3>
-                  <p style={{ color: 'var(--text-secondary)', marginBottom: '2rem', fontSize: '0.95rem' }}>Your first meal is one tap away.</p>
-                  <motion.button
-                    whileHover={{ scale: 1.03 }} whileTap={{ scale: 0.97 }}
-                    onClick={() => navigate('/customer/search')}
-                    style={{
-                      background: '#FF4D2E', color: '#FFFFFF',
-                      border: 'none', borderRadius: '12px',
-                      padding: '0.8rem 2rem', fontSize: '0.95rem', fontWeight: 700, cursor: 'pointer',
-                    }}
-                  >
-                    Browse restaurants
-                  </motion.button>
-                </motion.div>
-              ) : (
-                <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
-                  {safeOrders.map((order, idx) => (
-                    <motion.div
-                      key={order.id}
-                      variants={fadeUp}
-                      whileHover={{ y: -2 }}
-                      style={{
-                        background: 'var(--bg-elevated)', borderRadius: '20px',
-                        padding: '1.5rem',
-                        border: '1px solid #F0EFEC',
-                        boxShadow: '0 2px 8px rgba(0,0,0,0.04)',
-                      }}
-                    >
-                      {/* Order header */}
-                      <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', marginBottom: '1.1rem' }}>
-                        <div>
-                          <div style={{ display: 'flex', alignItems: 'center', gap: '0.6rem', marginBottom: '0.3rem' }}>
-                            <span style={{ fontSize: '0.9rem', fontWeight: 800, color: 'var(--text-primary)' }}>Order #{order.id}</span>
-                            <StatusPill status={order.status} />
-                          </div>
-                          <div style={{ display: 'flex', alignItems: 'center', gap: '0.4rem', color: 'var(--text-secondary)', fontSize: '0.8rem' }}>
-                            <Clock size={12} />
-                            {new Date(order.date).toLocaleString('en-IN', { day: 'numeric', month: 'short', year: 'numeric', hour: '2-digit', minute: '2-digit' })}
-                          </div>
-                        </div>
-                        <div style={{ textAlign: 'right' }}>
-                          <div style={{ fontSize: '1.2rem', fontWeight: 900, color: 'var(--text-primary)', letterSpacing: '-0.03em' }}>₹{Number(order.total || 0).toFixed(0)}</div>
-                          <div style={{ fontSize: '0.75rem', color: 'var(--text-secondary)', marginTop: '2px' }}>via {order.paymentMethod}</div>
-                        </div>
-                      </div>
-
-                      {/* Items */}
-                      <div style={{
-                        background: 'var(--bg-primary)', borderRadius: '12px',
-                        padding: '0.9rem 1.1rem', marginBottom: '1.1rem',
-                        display: 'flex', flexDirection: 'column', gap: '0.4rem',
-                      }}>
-                        {(order.items || []).map((item, i) => (
-                          <div key={i} style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                            <div style={{ display: 'flex', alignItems: 'center', gap: '0.6rem' }}>
-                              <span style={{
-                                background: '#FF4D2E', color: '#FFFFFF',
-                                fontSize: '0.7rem', fontWeight: 700,
-                                width: '20px', height: '20px', borderRadius: '6px',
-                                display: 'flex', alignItems: 'center', justifyContent: 'center',
-                              }}>{item.quantity}</span>
-                              <span style={{ fontSize: '0.88rem', color: '#3C3C38', fontWeight: 500 }}>{item.name}</span>
-                            </div>
-                            {item.price && (
-                              <span style={{ fontSize: '0.82rem', color: 'var(--text-secondary)', fontWeight: 500 }}>₹{Number(item.price * item.quantity).toFixed(0)}</span>
-                            )}
-                          </div>
-                        ))}
-                      </div>
-
-                      {/* Actions */}
-                      <div style={{ display: 'flex', gap: '0.7rem' }}>
-                        {order.status !== 'Delivered' ? (
-                          <motion.button
-                            whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.97 }}
-                            onClick={() => navigate(`/customer/orders/${order.id}`)}
-                            style={{
-                              display: 'flex', alignItems: 'center', gap: '0.4rem',
-                              background: '#111110', color: '#FFFFFF',
-                              border: 'none', borderRadius: '10px',
-                              padding: '0.6rem 1.3rem', fontSize: '0.85rem', fontWeight: 700,
-                              cursor: 'pointer',
-                            }}
-                          >
-                            <Activity size={14} /> Track live
-                          </motion.button>
-                        ) : (
-                          <motion.button
-                            whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.97 }}
-                            onClick={() => {
-                              (order.items || []).forEach(item => addToCart(item));
-                              navigate('/customer/cart');
-                              showToast('Items added to cart!');
-                            }}
-                            style={{
-                              display: 'flex', alignItems: 'center', gap: '0.4rem',
-                              background: '#FFF1EE', color: '#CC3318',
-                              border: 'none', borderRadius: '10px',
-                              padding: '0.6rem 1.3rem', fontSize: '0.85rem', fontWeight: 700,
-                              cursor: 'pointer',
-                            }}
-                          >
-                            <RotateCcw size={14} /> Reorder
-                          </motion.button>
-                        )}
-
-                        {order.status === 'Delivered' && (
-                          <>
-                            <motion.button
-                              whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.97 }}
-                              onClick={() => showToast('🚧 Rating feature is coming soon!', 'info')}
-                              style={{
-                                display: 'flex', alignItems: 'center', gap: '0.4rem',
-                                background: 'transparent', color: '#6B6B66',
-                                border: '1.5px solid #E8E7E4', borderRadius: '10px',
-                                padding: '0.6rem 1.3rem', fontSize: '0.85rem', fontWeight: 600,
-                                cursor: 'pointer',
-                              }}
-                            >
-                              <Star size={14} /> Rate
-                            </motion.button>
-                            <motion.button
-                              whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.97 }}
-                              onClick={() => {
-                                useStore.getState().updateOrderStatus(order.id, 'Refund Requested');
-                                showToast('Refund request submitted successfully!');
-                              }}
-                              style={{
-                                display: 'flex', alignItems: 'center', gap: '0.4rem',
-                                background: 'transparent', color: '#CC3318',
-                                border: '1.5px solid #FFD5CC', borderRadius: '10px',
-                                padding: '0.6rem 1.3rem', fontSize: '0.85rem', fontWeight: 600,
-                                cursor: 'pointer',
-                              }}
-                            >
-                              <RotateCcw size={14} /> Refund
-                            </motion.button>
-                          </>
-                        )}
-                      </div>
-                    </motion.div>
-                  ))}
-                </div>
-              )}
-            </motion.div>
+            <OrderHistory orders={safeOrders} addToCart={addToCart} showToast={showToast} updateOrderStatus={useStore.getState().updateOrderStatus} />
           )}
 
           {/* ════ WALLET ════════════════════════════════════════════════════ */}
           {tab === 'wallet' && (
-            <motion.div key="wallet" variants={stagger} initial="hidden" animate="show" exit={{ opacity: 0 }}>
-
-              {/* Balance hero */}
-              <motion.div
-                variants={fadeUp}
-                style={{
-                  background: '#111110', borderRadius: '24px',
-                  padding: '2rem 2.5rem', marginBottom: '1.25rem',
-                  display: 'flex', alignItems: 'center', justifyContent: 'space-between',
-                  overflow: 'hidden', position: 'relative',
-                }}
-              >
-                <div style={{ position: 'absolute', right: '-30px', top: '-30px', width: '200px', height: '200px', background: 'radial-gradient(circle, rgba(255,77,46,0.15) 0%, transparent 65%)' }} />
-                <div style={{ position: 'relative', zIndex: 1 }}>
-                  <div style={{ fontSize: '0.75rem', fontWeight: 700, color: 'rgba(255,255,255,0.4)', textTransform: 'uppercase', letterSpacing: '1.5px', marginBottom: '0.6rem' }}>
-                    Available balance
-                  </div>
-                  <div style={{ fontSize: '3rem', fontWeight: 900, color: '#FFFFFF', letterSpacing: '-0.05em', lineHeight: 1 }}>
-                    ₹{(walletBalance || 0).toFixed(2)}
-                  </div>
-                  <div style={{ marginTop: '0.75rem', display: 'flex', alignItems: 'center', gap: '0.4rem' }}>
-                    <Gift size={14} color="rgba(255,77,46,0.8)" />
-                    <span style={{ fontSize: '0.8rem', color: 'rgba(255,255,255,0.4)' }}>₹{savedAmt} saved via cashbacks</span>
-                  </div>
-                </div>
-                <Wallet size={52} color="rgba(255,255,255,0.07)" style={{ flexShrink: 0 }} />
-              </motion.div>
-
-              {/* Quick add amounts */}
-              <motion.div
-                variants={fadeUp}
-                style={{
-                  background: 'var(--bg-elevated)', borderRadius: '24px',
-                  padding: '2rem', marginBottom: '1.25rem',
-                  border: '1px solid #F0EFEC',
-                }}
-              >
-                <h3 style={{ fontSize: '1rem', fontWeight: 800, color: 'var(--text-primary)', marginBottom: '1.25rem', letterSpacing: '-0.02em' }}>
-                  Add money
-                </h3>
-                <div className="profile-add-money-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: '0.75rem', marginBottom: '1.5rem' }}>
-                  {[200, 500, 1000, 2000].map(amt => (
-                    <motion.button
-                      key={amt}
-                      whileHover={{ scale: 1.04 }} whileTap={{ scale: 0.96 }}
-                      onClick={() => { addMoney(amt); showToast(`₹${amt} added to wallet!`); }}
-                      style={{
-                        background: 'var(--bg-primary)', color: 'var(--text-primary)',
-                        border: '1.5px solid #E8E7E4', borderRadius: '12px',
-                        padding: '0.9rem 0', fontSize: '0.95rem', fontWeight: 700,
-                        cursor: 'pointer', transition: 'all 0.15s',
-                        display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '2px',
-                      }}
-                    >
-                      <Plus size={14} color="#FF4D2E" />
-                      ₹{amt}
-                    </motion.button>
-                  ))}
-                </div>
-
-                <div style={{ display: 'flex', gap: '0.75rem', alignItems: 'center' }}>
-                  <input
-                    type="number"
-                    value={customAmt}
-                    onChange={e => setCustomAmt(e.target.value)}
-                    placeholder="Custom amount..."
-                    style={{
-                      flex: 1, border: '1.5px solid #E8E7E4',
-                      borderRadius: '12px', padding: '0.8rem 1.1rem',
-                      fontSize: '0.95rem', outline: 'none', color: 'var(--text-primary)',
-                      background: 'var(--bg-primary)', fontWeight: 500,
-                    }}
-                    onFocus={e => e.target.style.borderColor = '#FF4D2E'}
-                    onBlur={e => e.target.style.borderColor = '#E8E7E4'}
-                  />
-                  <motion.button
-                    whileHover={{ scale: 1.03 }} whileTap={{ scale: 0.97 }}
-                    onClick={() => {
-                      const amt = parseFloat(customAmt);
-                      if (amt > 0) {
-                        addMoney(amt);
-                        showToast(`₹${amt} added to wallet!`);
-                        setCustomAmt('');
-                      }
-                    }}
-                    style={{
-                      background: '#FF4D2E', color: '#FFFFFF',
-                      border: 'none', borderRadius: '12px',
-                      padding: '0.8rem 1.6rem', fontSize: '0.9rem', fontWeight: 700,
-                      cursor: 'pointer', flexShrink: 0,
-                    }}
-                  >
-                    Add
-                  </motion.button>
-                </div>
-              </motion.div>
-
-              {/* Offers strip */}
-              <motion.div
-                variants={fadeUp}
-                style={{
-                  background: '#FFF1EE', borderRadius: '18px',
-                  padding: '1.2rem 1.5rem',
-                  border: '1px solid #FFD5CC',
-                  display: 'flex', alignItems: 'center', justifyContent: 'space-between',
-                }}
-              >
-                <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
-                  <div style={{
-                    width: '40px', height: '40px', borderRadius: '12px',
-                    background: '#FF4D2E', display: 'flex', alignItems: 'center', justifyContent: 'center',
-                  }}>
-                    <Zap size={18} color="#FFFFFF" />
-                  </div>
-                  <div>
-                    <div style={{ fontSize: '0.9rem', fontWeight: 800, color: '#CC3318' }}>5% cashback on next order</div>
-                    <div style={{ fontSize: '0.78rem', color: '#E8715A' }}>Use code <b>WALLET5</b> · Min ₹299</div>
-                  </div>
-                </div>
-                <ChevronRight size={18} color="#CC3318" />
-              </motion.div>
-            </motion.div>
+            <WalletSection walletBalance={walletBalance} addMoney={addMoney} showToast={showToast} savedAmt={savedAmt} />
           )}
 
           {/* ════ BOOKINGS ══════════════════════════════════════════════════ */}
           {tab === 'bookings' && (
-            <motion.div key="bookings" variants={stagger} initial="hidden" animate="show" exit={{ opacity: 0 }}>
-              {(!bookings || bookings.length === 0) ? (
-                <motion.div
-                  variants={fadeUp}
-                  style={{
-                    background: 'var(--bg-elevated)', borderRadius: '24px',
-                    padding: '4.5rem 2rem', textAlign: 'center',
-                    border: '1.5px dashed #E8E7E4',
-                  }}
-                >
-                  <div style={{ fontSize: '3rem', marginBottom: '1rem' }}>🪑</div>
-                  <h3 style={{ fontSize: '1.2rem', fontWeight: 800, color: 'var(--text-primary)', marginBottom: '0.5rem' }}>No table bookings yet</h3>
-                  <p style={{ color: 'var(--text-secondary)', marginBottom: '2rem', fontSize: '0.95rem' }}>Find a restaurant and reserve a table — it takes 10 seconds.</p>
-                  <motion.button
-                    whileHover={{ scale: 1.03 }} whileTap={{ scale: 0.97 }}
-                    onClick={() => navigate('/customer/search')}
-                    style={{
-                      background: '#111110', color: '#FFFFFF',
-                      border: 'none', borderRadius: '12px',
-                      padding: '0.8rem 2rem', fontSize: '0.95rem', fontWeight: 700, cursor: 'pointer',
-                    }}
-                  >
-                    Find restaurants
-                  </motion.button>
-                </motion.div>
-              ) : (
-                <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
-                  {bookings.map((booking) => (
-                    <motion.div
-                      key={booking.id}
-                      variants={fadeUp}
-                      whileHover={{ y: -2 }}
-                      style={{
-                        background: 'var(--bg-elevated)', borderRadius: '20px',
-                        padding: '1.5rem', border: '1px solid #F0EFEC',
-                        boxShadow: '0 2px 8px rgba(0,0,0,0.04)',
-                      }}
-                    >
-                      <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', marginBottom: '1.1rem' }}>
-                        <div>
-                          <div style={{ display: 'flex', alignItems: 'center', gap: '0.6rem', marginBottom: '0.3rem' }}>
-                            <span style={{ fontSize: '0.9rem', fontWeight: 800, color: 'var(--text-primary)' }}>Booking #{booking.id}</span>
-                            <StatusPill status={booking.status} />
-                          </div>
-                          <div style={{ display: 'flex', alignItems: 'center', gap: '0.4rem', color: 'var(--text-secondary)', fontSize: '0.8rem' }}>
-                            <Clock size={12} />
-                            Requested on {new Date(booking.createdAt).toLocaleString()}
-                          </div>
-                        </div>
-                      </div>
-
-                      <div style={{
-                        background: 'var(--bg-primary)', borderRadius: '12px',
-                        padding: '0.9rem 1.1rem',
-                        display: 'flex', flexDirection: 'column', gap: '0.6rem',
-                      }}>
-                        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                          <span style={{ fontSize: '0.88rem', color: '#3C3C38', fontWeight: 600 }}>Restaurant</span>
-                          <span style={{ fontSize: '0.88rem', color: 'var(--text-primary)', fontWeight: 800 }}>{booking.restaurantName}</span>
-                        </div>
-                        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                          <span style={{ fontSize: '0.88rem', color: '#3C3C38', fontWeight: 600 }}>Date & Time</span>
-                          <span style={{ fontSize: '0.88rem', color: 'var(--text-primary)', fontWeight: 800 }}>{booking.date} at {booking.time}</span>
-                        </div>
-                        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                          <span style={{ fontSize: '0.88rem', color: '#3C3C38', fontWeight: 600 }}>Guests</span>
-                          <span style={{ fontSize: '0.88rem', color: 'var(--text-primary)', fontWeight: 800 }}>{booking.guests} People</span>
-                        </div>
-                      </div>
-                    </motion.div>
-                  ))}
-                </div>
-              )}
-            </motion.div>
+            <BookingsSection bookings={bookings} />
           )}
 
           {/* ════ SETTINGS ══════════════════════════════════════════════════ */}
           {tab === 'settings' && (
             <motion.div key="settings" variants={stagger} initial="hidden" animate="show" exit={{ opacity: 0 }}>
-              <motion.div variants={fadeUp} style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
-                
-                {/* Account Details */}
-                <div style={{ background: 'var(--bg-elevated)', borderRadius: '20px', padding: '1.5rem', border: '1px solid #F0EFEC', boxShadow: '0 2px 8px rgba(0,0,0,0.04)' }}>
-                  <h3 style={{ fontSize: '1.1rem', fontWeight: 800, color: 'var(--text-primary)', marginBottom: '1.25rem' }}>Account Details</h3>
-                  <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
-                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                      <div>
-                        <p style={{ fontSize: '0.8rem', color: 'var(--text-secondary)', fontWeight: 600, marginBottom: '2px' }}>Phone Number</p>
-                        <p style={{ fontSize: '0.95rem', fontWeight: 700, color: 'var(--text-primary)' }}>+91 98765 43210</p>
-                      </div>
-                      <span onClick={() => setActiveSettingModal('account')} style={{ fontSize: '0.8rem', color: '#FF4D2E', fontWeight: 700, cursor: 'pointer' }}>EDIT</span>
-                    </div>
-                    <div style={{ width: '100%', height: '1px', background: 'var(--glass-border)' }} />
-                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                      <div>
-                        <p style={{ fontSize: '0.8rem', color: 'var(--text-secondary)', fontWeight: 600, marginBottom: '2px' }}>Email Address</p>
-                        <p style={{ fontSize: '0.95rem', fontWeight: 700, color: 'var(--text-primary)' }}>{user.email}</p>
-                      </div>
-                      <span onClick={() => setActiveSettingModal('account')} style={{ fontSize: '0.8rem', color: '#FF4D2E', fontWeight: 700, cursor: 'pointer' }}>EDIT</span>
-                    </div>
-                  </div>
-                </div>
-
-                {/* Manage Addresses */}
-                <div onClick={() => setActiveSettingModal('addresses')} style={{ background: 'var(--bg-elevated)', borderRadius: '20px', padding: '1.5rem', border: '1px solid #F0EFEC', boxShadow: '0 2px 8px rgba(0,0,0,0.04)', display: 'flex', justifyContent: 'space-between', alignItems: 'center', cursor: 'pointer' }}>
-                  <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
-                    <div style={{ background: 'var(--bg-primary)', padding: '10px', borderRadius: '12px' }}><MapPin size={20} color="#111110" /></div>
-                    <div>
-                      <h4 style={{ fontSize: '1rem', fontWeight: 700, color: 'var(--text-primary)', margin: '0 0 2px' }}>Manage Addresses</h4>
-                      <p style={{ fontSize: '0.8rem', color: 'var(--text-secondary)', margin: 0 }}>Add or remove saved delivery addresses</p>
-                    </div>
-                  </div>
-                  <ChevronRight size={18} color="#9B9B96" />
-                </div>
-
-                {/* Payments */}
-                <div onClick={() => setActiveSettingModal('payments')} style={{ background: 'var(--bg-elevated)', borderRadius: '20px', padding: '1.5rem', border: '1px solid #F0EFEC', boxShadow: '0 2px 8px rgba(0,0,0,0.04)', display: 'flex', justifyContent: 'space-between', alignItems: 'center', cursor: 'pointer' }}>
-                  <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
-                    <div style={{ background: 'var(--bg-primary)', padding: '10px', borderRadius: '12px' }}><CreditCard size={20} color="#111110" /></div>
-                    <div>
-                      <h4 style={{ fontSize: '1rem', fontWeight: 700, color: 'var(--text-primary)', margin: '0 0 2px' }}>Payments</h4>
-                      <p style={{ fontSize: '0.8rem', color: 'var(--text-secondary)', margin: 0 }}>Manage saved cards, UPI, and wallets</p>
-                    </div>
-                  </div>
-                  <ChevronRight size={18} color="#9B9B96" />
-                </div>
-
-                {/* Notifications */}
-                <div onClick={() => setActiveSettingModal('notifications')} style={{ background: 'var(--bg-elevated)', borderRadius: '20px', padding: '1.5rem', border: '1px solid #F0EFEC', boxShadow: '0 2px 8px rgba(0,0,0,0.04)', display: 'flex', justifyContent: 'space-between', alignItems: 'center', cursor: 'pointer' }}>
-                  <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
-                    <div style={{ background: 'var(--bg-primary)', padding: '10px', borderRadius: '12px' }}><Bell size={20} color="#111110" /></div>
-                    <div>
-                      <h4 style={{ fontSize: '1rem', fontWeight: 700, color: 'var(--text-primary)', margin: '0 0 2px' }}>Notifications</h4>
-                      <p style={{ fontSize: '0.8rem', color: 'var(--text-secondary)', margin: 0 }}>Manage promo emails and push alerts</p>
-                    </div>
-                  </div>
-                  <ChevronRight size={18} color="#9B9B96" />
-                </div>
-
-
-
-                {/* Privacy & Security */}
-                <div onClick={() => setActiveSettingModal('privacy')} style={{ background: 'var(--bg-elevated)', borderRadius: '20px', padding: '1.5rem', border: '1px solid #F0EFEC', boxShadow: '0 2px 8px rgba(0,0,0,0.04)', display: 'flex', justifyContent: 'space-between', alignItems: 'center', cursor: 'pointer' }}>
-                  <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
-                    <div style={{ background: 'var(--bg-primary)', padding: '10px', borderRadius: '12px' }}><Shield size={20} color="#111110" /></div>
-                    <div>
-                      <h4 style={{ fontSize: '1rem', fontWeight: 700, color: 'var(--text-primary)', margin: '0 0 2px' }}>Privacy & Security</h4>
-                      <p style={{ fontSize: '0.8rem', color: 'var(--text-secondary)', margin: 0 }}>Data settings and account management</p>
-                    </div>
-                  </div>
-                  <ChevronRight size={18} color="#9B9B96" />
-                </div>
-                
-                <div style={{ display: 'flex', justifyContent: 'center', marginTop: '1rem' }}>
-                  <button onClick={() => setActiveSettingModal('delete')} style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', color: '#FF4D2E', background: 'none', border: 'none', fontWeight: 700, fontSize: '0.9rem', cursor: 'pointer' }}>
-                    <Trash2 size={16} /> Delete Account
-                  </button>
-                </div>
-
-              </motion.div>
+              <AccountSettings user={user} setActiveSettingModal={setActiveSettingModal} />
+              <div style={{ display: 'flex', justifyContent: 'center', marginTop: '1rem' }}>
+                <button onClick={() => setActiveSettingModal('delete')} aria-label="Delete Account" style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', color: '#FF4D2E', background: 'none', border: 'none', fontWeight: 700, fontSize: '0.9rem', cursor: 'pointer' }}>
+                  <Trash2 size={16} /> Delete Account
+                </button>
+              </div>
             </motion.div>
           )}
 
@@ -862,10 +417,10 @@ export default function Profile() {
                       <p style={{ margin: 0, fontSize: '0.8rem', color: 'var(--text-secondary)' }}>{addr.address}</p>
                     </div>
                   </div>
-                  <button onClick={() => setAddresses(addresses.filter(a => a.id !== addr.id))} style={{ background: 'none', border: 'none', cursor: 'pointer', color: '#C0BFB9' }}><Trash2 size={16}/></button>
+                  <button onClick={() => setAddresses(addresses.filter(a => a.id !== addr.id))} style={{ background: 'none', border: 'none', cursor: 'pointer', color: '#C0BFB9' }}><Trash2 size={16} /></button>
                 </div>
               ))}
-              <button onClick={() => showToast('🚧 Address addition is coming soon!', 'info')} style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '0.5rem', background: 'var(--bg-primary)', border: '1.5px dashed #E8E7E4', padding: '1rem', borderRadius: '12px', fontWeight: 700, color: 'var(--text-primary)', cursor: 'pointer', marginTop: '0.5rem' }}>
+              <button onClick={() => showToast(' Address addition is coming soon!', 'info')} style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '0.5rem', background: 'var(--bg-primary)', border: '1.5px dashed #E8E7E4', padding: '1rem', borderRadius: '12px', fontWeight: 700, color: 'var(--text-primary)', cursor: 'pointer', marginTop: '0.5rem' }}>
                 <Plus size={16} /> Add New Address
               </button>
             </div>
@@ -884,10 +439,10 @@ export default function Profile() {
                       <p style={{ margin: 0, fontSize: '0.8rem', color: 'var(--text-secondary)' }}>{pay.details}</p>
                     </div>
                   </div>
-                  <button onClick={() => setPayments(payments.filter(p => p.id !== pay.id))} style={{ background: 'none', border: 'none', cursor: 'pointer', color: '#C0BFB9' }}><Trash2 size={16}/></button>
+                  <button onClick={() => setPayments(payments.filter(p => p.id !== pay.id))} style={{ background: 'none', border: 'none', cursor: 'pointer', color: '#C0BFB9' }}><Trash2 size={16} /></button>
                 </div>
               ))}
-              <button onClick={() => showToast('🚧 Payment methods coming soon!', 'info')} style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '0.5rem', background: 'var(--bg-primary)', border: '1.5px dashed #E8E7E4', padding: '1rem', borderRadius: '12px', fontWeight: 700, color: 'var(--text-primary)', cursor: 'pointer', marginTop: '0.5rem' }}>
+              <button onClick={() => showToast(' Payment methods coming soon!', 'info')} style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '0.5rem', background: 'var(--bg-primary)', border: '1.5px dashed #E8E7E4', padding: '1rem', borderRadius: '12px', fontWeight: 700, color: 'var(--text-primary)', cursor: 'pointer', marginTop: '0.5rem' }}>
                 <Plus size={16} /> Add Payment Method
               </button>
             </div>

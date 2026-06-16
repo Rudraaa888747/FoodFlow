@@ -594,16 +594,16 @@
 
 .lp-trusted {
   padding: 2.75rem 0;
-  border-top: 1px solid var(--midnight-border);
+  border-top: 1px solid rgba(0, 0, 0, 0.05);
   overflow: hidden;
-  background: var(--midnight);
+  background: #ffffff;
 }
 .lp-trusted-label {
   display: block;
   text-align: center;
   font-size: 0.65rem;
   font-weight: 600;
-  color: rgba(255, 255, 255, 0.2);
+  color: rgba(0, 0, 0, 0.4);
   letter-spacing: 0.14em;
   text-transform: uppercase;
   margin-bottom: 1.35rem;
@@ -636,7 +636,7 @@
   font-family: var(--font-display);
   font-size: 0.95rem;
   font-weight: 600;
-  color: rgba(255, 255, 255, 0.15);
+  color: rgba(0, 0, 0, 0.35);
   white-space: nowrap;
   letter-spacing: -0.01em;
   flex-shrink: 0;
@@ -649,7 +649,7 @@
   right: -1.95rem;
   top: 50%;
   transform: translateY(-50%);
-  color: rgba(255, 255, 255, 0.08);
+  color: rgba(0, 0, 0, 0.2);
   font-size: 1.2em;
 }
 

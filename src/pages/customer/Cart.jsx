@@ -140,6 +140,50 @@ export default function Cart() {
 
           {/* ── LEFT: Cart items ─────────────────────────────────────────── */}
           <div style={{ flex: '1 1 55%', display: 'flex', flexDirection: 'column', gap: '0.85rem', minWidth: 0 }}>
+            <style>{`
+              .cart-item-card {
+                background: var(--bg-elevated);
+                border-radius: 20px;
+                border: 1px solid #F0EFEC;
+                padding: 1.25rem;
+                display: flex;
+                gap: 1rem;
+                align-items: center;
+                box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+              }
+              .cart-item-controls {
+                display: flex;
+                align-items: center;
+                gap: 0.75rem;
+                flex-shrink: 0;
+              }
+              .cart-item-title {
+                font-size: 0.95rem;
+                font-weight: 700;
+                color: var(--text-primary);
+                margin-bottom: 0.2rem;
+                white-space: nowrap;
+                overflow: hidden;
+                text-overflow: ellipsis;
+              }
+              @media (max-width: 768px) {
+                .cart-item-card {
+                  flex-wrap: wrap;
+                  padding: 1rem;
+                }
+                .cart-item-controls {
+                  width: 100%;
+                  justify-content: flex-end;
+                  margin-top: -0.2rem;
+                }
+                .cart-item-title {
+                  white-space: normal;
+                  display: -webkit-box;
+                  -webkit-line-clamp: 2;
+                  -webkit-box-orient: vertical;
+                }
+              }
+            `}</style>
             <AnimatePresence>
               {cart.map((item, idx) => (
                 <motion.div
@@ -149,13 +193,7 @@ export default function Cart() {
                   animate={{ opacity: 1, y: 0 }}
                   exit={{ opacity: 0, x: -24, height: 0, marginBottom: 0 }}
                   transition={{ type: 'spring', stiffness: 200, damping: 22, delay: idx * 0.04 }}
-                  style={{
-                    background: 'var(--bg-elevated)', borderRadius: '20px',
-                    border: '1px solid #F0EFEC',
-                    padding: '1.25rem',
-                    display: 'flex', gap: '1rem', alignItems: 'center',
-                    boxShadow: '0 2px 8px rgba(0,0,0,0.04)',
-                  }}
+                  className="cart-item-card"
                 >
                   {/* Image */}
                   <div style={{
@@ -171,7 +209,7 @@ export default function Cart() {
 
                   {/* Info */}
                   <div style={{ flex: 1, minWidth: 0 }}>
-                    <p style={{ fontSize: '0.95rem', fontWeight: 700, color: 'var(--text-primary)', marginBottom: '0.2rem', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
+                    <p className="cart-item-title">
                       {item.name}
                     </p>
                     <p style={{ fontSize: '0.78rem', color: 'var(--text-secondary)', marginBottom: '0.6rem', fontWeight: 500 }}>
@@ -183,7 +221,7 @@ export default function Cart() {
                   </div>
 
                   {/* Controls */}
-                  <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', flexShrink: 0 }}>
+                  <div className="cart-item-controls">
                     <Stepper
                       value={item.quantity}
                       onInc={() => updateQuantity(item.id, item.quantity + 1)}

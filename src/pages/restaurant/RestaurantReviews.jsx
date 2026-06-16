@@ -1,5 +1,6 @@
 import React from 'react';
 import { Star, MessageSquare, ThumbsUp, MoreHorizontal, Filter } from 'lucide-react';
+import toast from 'react-hot-toast';
 import { motion } from 'framer-motion';
 
 export default function RestaurantReviews() {
@@ -24,7 +25,7 @@ export default function RestaurantReviews() {
 
   return (
     <motion.div initial="hidden" animate="show" variants={containerVariants} className="flex-col" style={{ gap: '2rem' }}>
-      
+
       {/* Header */}
       <header className="flex-between">
         <motion.div variants={itemVariants}>
@@ -42,9 +43,9 @@ export default function RestaurantReviews() {
           </div>
           <div style={{ fontSize: '0.85rem', color: 'var(--text-secondary)' }}>Based on 1,245 reviews</div>
         </div>
-        
+
         <div style={{ width: '1px', height: '100px', background: 'var(--glass-border)' }} />
-        
+
         <div style={{ flex: 1, display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
           {[
             { stars: 5, pct: 75 },
@@ -58,11 +59,11 @@ export default function RestaurantReviews() {
                 {row.stars} <Star size={12} fill="currentColor" />
               </div>
               <div style={{ flex: 1, height: '6px', background: 'var(--bg-elevated)', borderRadius: '3px', overflow: 'hidden' }}>
-                <motion.div 
+                <motion.div
                   initial={{ width: 0 }}
                   animate={{ width: `${row.pct}%` }}
                   transition={{ duration: 1, delay: 0.2 }}
-                  style={{ height: '100%', background: row.stars >= 4 ? 'var(--success)' : row.stars === 3 ? 'var(--warning)' : 'var(--danger)', borderRadius: '3px' }} 
+                  style={{ height: '100%', background: row.stars >= 4 ? 'var(--success)' : row.stars === 3 ? 'var(--warning)' : 'var(--danger)', borderRadius: '3px' }}
                 />
               </div>
               <div style={{ width: '40px', fontSize: '0.85rem', color: 'var(--text-secondary)', textAlign: 'right' }}>{row.pct}%</div>
@@ -75,26 +76,26 @@ export default function RestaurantReviews() {
       <motion.div variants={itemVariants}>
         <div className="flex-between" style={{ marginBottom: '1.5rem' }}>
           <h2 style={{ fontSize: '1.25rem' }}>Recent Feedback</h2>
-          <button className="secondary-button" style={{ padding: '0.5rem 1rem' }}>
+          <button onClick={() => toast(' Filters coming soon!', { icon: '⚙️' })} className="secondary-button" style={{ padding: '0.5rem 1rem' }}>
             <Filter size={16} /> Filter
           </button>
         </div>
-        
+
         <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
           {reviews.map((review, i) => (
-            <motion.div 
-              key={review.id} 
+            <motion.div
+              key={review.id}
               initial={{ opacity: 0, y: 10 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.1 * i }}
-              className="glass-panel review-item" 
+              className="glass-panel review-item"
               style={{ padding: '1.5rem', display: 'flex', gap: '1.5rem' }}
             >
               {/* Avatar */}
               <div style={{ width: '48px', height: '48px', borderRadius: '50%', background: review.avatarColor, display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '1.2rem', fontWeight: 600, color: '#fff', flexShrink: 0, boxShadow: `0 0 15px ${review.avatarColor}40` }}>
                 {review.customer.charAt(0)}
               </div>
-              
+
               {/* Content */}
               <div style={{ flex: 1 }}>
                 <div className="flex-between" style={{ marginBottom: '0.5rem' }}>
@@ -102,19 +103,19 @@ export default function RestaurantReviews() {
                     <h4 style={{ fontSize: '1.1rem', margin: 0 }}>{review.customer}</h4>
                     <span style={{ fontSize: '0.85rem', color: 'var(--text-tertiary)' }}>{review.date}</span>
                   </div>
-                  <button style={{ background: 'none', border: 'none', color: 'var(--text-secondary)', cursor: 'pointer' }}><MoreHorizontal size={18} /></button>
+                  <button onClick={() => toast(' Options coming soon!', { icon: '⚙️' })} style={{ background: 'none', border: 'none', color: 'var(--text-secondary)', cursor: 'pointer' }}><MoreHorizontal size={18} /></button>
                 </div>
-                
+
                 <div style={{ display: 'flex', color: '#f5a623', marginBottom: '1rem' }}>
                   {[...Array(5)].map((_, i) => (
                     <Star key={i} size={14} fill={i < review.rating ? 'currentColor' : 'none'} stroke={i < review.rating ? 'currentColor' : 'var(--text-tertiary)'} />
                   ))}
                 </div>
-                
+
                 <p style={{ fontSize: '1rem', lineHeight: 1.6, color: 'var(--text-primary)', marginBottom: '1.5rem' }}>
                   "{review.text}"
                 </p>
-                
+
                 {/* Reply Section */}
                 {review.reply ? (
                   <div style={{ background: 'var(--bg-elevated)', borderRadius: 'var(--radius-lg)', padding: '1.25rem', border: '1px solid var(--glass-border-light)', display: 'flex', gap: '1rem' }}>
@@ -130,7 +131,7 @@ export default function RestaurantReviews() {
                 ) : (
                   <div className="review-reply-action" style={{ display: 'flex', gap: '1rem' }}>
                     <input type="text" className="glass-input" placeholder="Type a reply..." style={{ flex: 1 }} />
-                    <button className="secondary-button" style={{ padding: '0 1.5rem' }}>Reply</button>
+                    <button onClick={() => toast(' Reply feature coming soon!', { icon: '💬' })} className="secondary-button" style={{ padding: '0 1.5rem' }}>Reply</button>
                   </div>
                 )}
               </div>

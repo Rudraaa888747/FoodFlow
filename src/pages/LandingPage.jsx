@@ -136,10 +136,7 @@ export default function LandingPage() {
       >
         <div className="lp-nav-inner">
           <Link to="/" className="lp-logo" aria-label="FoodFlow home">
-            <div className="lp-logo-mark">
-              <Utensils size={15} strokeWidth={2.5} />
-            </div>
-            <span className="lp-logo-text">FOODFLOW</span>
+            <img src="/logo.png" alt="FoodFlow Logo" style={{ height: '36px', width: 'auto', objectFit: 'contain' }} />
           </Link>
 
           {/* Desktop links */}
@@ -570,10 +567,7 @@ export default function LandingPage() {
         <div className="lp-container lp-footer-inner">
           <div className="lp-footer-brand">
             <Link to="/" className="lp-logo" aria-label="FoodFlow home">
-              <div className="lp-logo-mark">
-                <Utensils size={13} strokeWidth={2.5} />
-              </div>
-              <span className="lp-logo-text">FOODFLOW</span>
+              <img src="/logo.png" alt="FoodFlow Logo" style={{ height: '36px', width: 'auto', objectFit: 'contain' }} />
             </Link>
             <p className="lp-footer-tagline">
               Where every craving finds its way home.

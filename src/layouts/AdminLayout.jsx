@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Outlet, Link, useLocation } from 'react-router-dom';
-import { LayoutDashboard, Users, Store, Bike, FileText, Settings, ShieldAlert, LogOut, Package } from 'lucide-react';
+import { LayoutDashboard, Users, Store, Bike, FileText, Settings, ShieldAlert, LogOut, Package, Home } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 
 export default function AdminLayout() {
@@ -36,6 +36,7 @@ export default function AdminLayout() {
             <NavItem to="/admin/restaurants" icon={<Store size={20} />} label="Restaurants" active={path === '/admin/restaurants'} />
             <NavItem to="/admin/reports" icon={<FileText size={20} />} label="Reports" active={path === '/admin/reports'} />
             <NavItem to="/admin/settings" icon={<Settings size={20} />} label="Platform Settings" active={path === '/admin/settings'} />
+            <NavItem to="/" icon={<Home size={20} />} label="Back to Website" active={false} />
           </nav>
           
           <div className="admin-sidebar-footer" style={{ padding: '2rem', borderTop: '1px solid var(--glass-border-light)' }}>
@@ -100,6 +101,7 @@ function AdminMobileBottomNav({ path }) {
     { to: '/admin/restaurants', icon: Store, label: 'Vendors' },
     { to: '/admin/customers', icon: Users, label: 'Users' },
     { to: '/admin/reports', icon: FileText, label: 'Reports' },
+    { to: '/', icon: Home, label: 'Website' },
   ];
 
   return (

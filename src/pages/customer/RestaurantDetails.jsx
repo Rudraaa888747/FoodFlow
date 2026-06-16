@@ -67,8 +67,7 @@ export default function RestaurantDetails() {
       customerPhone: '+91 9876543210',
       guests,
       date,
-      time,
-      specialNotes: ''
+      time
     }, (res) => {
       setIsBooking(false);
       if (res && res.success === false) {

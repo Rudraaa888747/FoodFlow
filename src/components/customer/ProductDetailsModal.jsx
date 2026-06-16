@@ -132,9 +132,11 @@ export default function ProductDetailsModal({ item, restaurantId, restaurantName
                 {item.addons.map((addon, idx) => {
                   const isSelected = selectedAddons.includes(addon);
                   return (
-                    <div 
+                    <button 
+                      aria-label={`Toggle addon ${addon.name}`}
                       key={idx} 
                       className={`addon-item ${isSelected ? 'selected' : ''}`}
+                      style={{ appearance: 'none', background: 'transparent', border: 'none', textAlign: 'left', width: '100%', padding: '0', display: 'flex' }}
                       onClick={() => handleToggleAddon(addon)}
                     >
                       <div className="addon-info">
@@ -142,7 +144,7 @@ export default function ProductDetailsModal({ item, restaurantId, restaurantName
                         <span className="addon-name">{addon.name}</span>
                       </div>
                       <span className="addon-price">+₹{addon.price}</span>
-                    </div>
+                    </button>
                   );
                 })}
               </div>
@@ -159,7 +161,7 @@ export default function ProductDetailsModal({ item, restaurantId, restaurantName
                 
                 <div className="recommendation-scroll">
                   {recommendations.map(rec => (
-                    <div key={rec.id} className="recommendation-card" onClick={() => {
+                    <button aria-label={`Add ${rec.name}`} key={rec.id} className="recommendation-card" style={{ appearance: 'none', border: 'none', textAlign: 'left' }} onClick={() => {
                       // Simple rapid add for recommendation, or could replace current modal item
                       // We'll just add it to cart directly to prevent nesting modals
                       onAdd({ ...rec, quantity: 1, selectedAddons: [], restaurantId, restaurantName });
@@ -169,8 +171,8 @@ export default function ProductDetailsModal({ item, restaurantId, restaurantName
                         <h4 className="rec-name">{rec.name}</h4>
                         <span className="rec-price">₹{rec.price}</span>
                       </div>
-                      <button className="rec-add-btn">Add</button>
-                    </div>
+                      <div className="rec-add-btn">Add</div>
+                    </button>
                   ))}
                 </div>
               </div>

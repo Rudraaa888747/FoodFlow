@@ -35,7 +35,7 @@ export default function RestaurantOffers() {
 
   return (
     <motion.div initial="hidden" animate="show" variants={containerVariants} className="flex-col" style={{ gap: '2rem' }}>
-      
+
       {/* Header */}
       <header className="flex-between">
         <motion.div variants={itemVariants}>
@@ -86,17 +86,17 @@ export default function RestaurantOffers() {
           <h2 style={{ fontSize: '1.25rem' }}>Running Campaigns</h2>
           <span className="badge badge-neutral">{offers.length}</span>
         </div>
-        
+
         <div className="grid-cols-3">
           <AnimatePresence>
             {offers.map((offer, index) => (
-              <motion.div 
-                key={offer.id} 
+              <motion.div
+                key={offer.id}
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, scale: 0.9 }}
                 transition={{ delay: index * 0.1 }}
-                className="glass-panel" 
+                className="glass-panel"
                 style={{ position: 'relative', overflow: 'hidden', padding: 0, display: 'flex', flexDirection: 'column' }}
                 whileHover={{ y: -5, boxShadow: '0 15px 30px -10px rgba(0,0,0,0.5)' }}
               >
@@ -105,19 +105,19 @@ export default function RestaurantOffers() {
                   <div style={{ width: '8px', height: '8px', borderRadius: '50%', background: 'var(--success)', boxShadow: '0 0 10px var(--success)' }} />
                   <span style={{ fontSize: '0.75rem', fontWeight: 600, color: 'var(--success)', textTransform: 'uppercase', letterSpacing: '0.05em' }}>{offer.status}</span>
                 </div>
-                
+
                 {/* Ticket Top */}
                 <div style={{ padding: '2rem 1.5rem 1.5rem', background: 'linear-gradient(135deg, rgba(255,255,255,0.05) 0%, transparent 100%)', borderBottom: '2px dashed var(--glass-border-strong)', position: 'relative' }}>
                   <div style={{ position: 'absolute', bottom: '-10px', left: '-10px', width: '20px', height: '20px', borderRadius: '50%', background: 'var(--bg-primary)', borderRight: '1px solid var(--glass-border)' }} />
                   <div style={{ position: 'absolute', bottom: '-10px', right: '-10px', width: '20px', height: '20px', borderRadius: '50%', background: 'var(--bg-primary)', borderLeft: '1px solid var(--glass-border)' }} />
-                  
+
                   <div style={{ display: 'inline-flex', padding: '0.5rem', background: 'var(--bg-elevated)', borderRadius: '10px', marginBottom: '1rem', border: '1px solid var(--glass-border)' }}>
                     <Megaphone size={20} className="text-secondary" />
                   </div>
                   <h3 style={{ fontSize: '1.25rem', marginBottom: '0.25rem' }}>{offer.title}</h3>
                   <div style={{ fontSize: '2rem', fontWeight: 700, letterSpacing: '-0.03em', color: 'var(--accent-primary)' }}>{offer.discount}</div>
                 </div>
-                
+
                 {/* Ticket Bottom */}
                 <div style={{ padding: '1.5rem', flex: 1, display: 'flex', flexDirection: 'column', gap: '1rem' }}>
                   <div style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
@@ -146,8 +146,8 @@ export default function RestaurantOffers() {
                       </span>
                     </div>
                   </div>
-                  
-                  <button className="secondary-button" style={{ marginTop: 'auto', width: '100%', display: 'flex', justifyContent: 'space-between' }}>
+
+                  <button onClick={() => toast(' Analytics feature coming soon!', { icon: '📊' })} className="secondary-button" style={{ marginTop: 'auto', width: '100%', display: 'flex', justifyContent: 'space-between' }}>
                     View Analytics <ChevronRight size={16} className="text-secondary" />
                   </button>
                 </div>
@@ -160,46 +160,46 @@ export default function RestaurantOffers() {
       {/* Add Modal */}
       <AnimatePresence>
         {showAddModal && (
-          <motion.div 
-            initial={{ opacity: 0 }} 
-            animate={{ opacity: 1 }} 
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             style={{ position: 'fixed', inset: 0, background: 'rgba(0,0,0,0.8)', backdropFilter: 'blur(8px)', display: 'flex', alignItems: 'center', justifyContent: 'center', zIndex: 1000 }}
           >
-            <motion.div 
+            <motion.div
               initial={{ scale: 0.95, y: 20 }}
               animate={{ scale: 1, y: 0 }}
               exit={{ scale: 0.95, y: 20 }}
               transition={{ type: "spring", stiffness: 300, damping: 30 }}
-              className="glass-panel" 
+              className="glass-panel"
               style={{ width: '100%', maxWidth: '500px', padding: '2.5rem', background: 'var(--bg-secondary)', border: '1px solid var(--glass-border-strong)', boxShadow: '0 25px 50px -12px rgba(0,0,0,1)' }}
             >
               <div className="flex-between" style={{ marginBottom: '2rem' }}>
                 <h2 style={{ fontSize: '1.5rem' }}>Create Campaign</h2>
-                <button onClick={() => setShowAddModal(false)} style={{ background: 'var(--bg-elevated)', border: '1px solid var(--glass-border)', borderRadius: '50%', width: '32px', height: '32px', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'var(--text-secondary)', cursor: 'pointer', transition: 'all 0.2s' }} onMouseOver={e => {e.currentTarget.style.color = 'var(--text-primary)'; e.currentTarget.style.background = 'rgba(255,255,255,0.1)'}} onMouseOut={e => {e.currentTarget.style.color = 'var(--text-secondary)'; e.currentTarget.style.background = 'var(--bg-elevated)'}}>
+                <button onClick={() => setShowAddModal(false)} style={{ background: 'var(--bg-elevated)', border: '1px solid var(--glass-border)', borderRadius: '50%', width: '32px', height: '32px', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'var(--text-secondary)', cursor: 'pointer', transition: 'all 0.2s' }} onMouseOver={e => { e.currentTarget.style.color = 'var(--text-primary)'; e.currentTarget.style.background = 'rgba(255,255,255,0.1)' }} onMouseOut={e => { e.currentTarget.style.color = 'var(--text-secondary)'; e.currentTarget.style.background = 'var(--bg-elevated)' }}>
                   <X size={16} />
                 </button>
               </div>
-              
+
               <form onSubmit={handleAddOffer} style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
                 <div>
                   <label style={{ display: 'block', fontSize: '0.85rem', color: 'var(--text-secondary)', marginBottom: '0.5rem', fontWeight: 500 }}>Campaign Title</label>
-                  <input type="text" placeholder="e.g. Navratri Special" className="glass-input" value={newOffer.title} onChange={e => setNewOffer({...newOffer, title: e.target.value})} required />
+                  <input type="text" placeholder="e.g. Navratri Special" className="glass-input" value={newOffer.title} onChange={e => setNewOffer({ ...newOffer, title: e.target.value })} required />
                 </div>
-                
+
                 <div>
                   <label style={{ display: 'block', fontSize: '0.85rem', color: 'var(--text-secondary)', marginBottom: '0.5rem', fontWeight: 500 }}>Offer Details</label>
-                  <input type="text" placeholder="e.g. 20% OFF or Flat ₹150" className="glass-input" value={newOffer.discount} onChange={e => setNewOffer({...newOffer, discount: e.target.value})} required />
+                  <input type="text" placeholder="e.g. 20% OFF or Flat ₹150" className="glass-input" value={newOffer.discount} onChange={e => setNewOffer({ ...newOffer, discount: e.target.value })} required />
                 </div>
-                
+
                 <div className="offer-modal-grid" style={{ display: 'flex', gap: '1rem' }}>
                   <div style={{ flex: 1 }}>
                     <label style={{ display: 'block', fontSize: '0.85rem', color: 'var(--text-secondary)', marginBottom: '0.5rem', fontWeight: 500 }}>Promo Code</label>
-                    <input type="text" placeholder="e.g. NAVRATRI20" className="glass-input" value={newOffer.code} onChange={e => setNewOffer({...newOffer, code: e.target.value.toUpperCase()})} required />
+                    <input type="text" placeholder="e.g. NAVRATRI20" className="glass-input" value={newOffer.code} onChange={e => setNewOffer({ ...newOffer, code: e.target.value.toUpperCase() })} required />
                   </div>
                   <div style={{ flex: 1 }}>
                     <label style={{ display: 'block', fontSize: '0.85rem', color: 'var(--text-secondary)', marginBottom: '0.5rem', fontWeight: 500 }}>Expiration Date</label>
-                    <input type="date" className="glass-input" value={newOffer.expires} onChange={e => setNewOffer({...newOffer, expires: e.target.value})} required style={{ colorScheme: 'dark' }} />
+                    <input type="date" className="glass-input" value={newOffer.expires} onChange={e => setNewOffer({ ...newOffer, expires: e.target.value })} required style={{ colorScheme: 'dark' }} />
                   </div>
                 </div>
 

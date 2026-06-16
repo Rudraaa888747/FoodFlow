@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { Outlet, Link, useLocation } from 'react-router-dom';
-import { Store, LayoutDashboard, UtensilsCrossed, Package, Megaphone, Star, Settings, LogOut, ChevronRight, Calendar, Utensils } from 'lucide-react';
+import { Store, LayoutDashboard, UtensilsCrossed, Package, Megaphone, Star, Settings, LogOut, ChevronRight, Calendar, Utensils, Home } from 'lucide-react';
 import { motion } from 'framer-motion';
 import RestoMobileBottomNav from '../components/restaurant/RestoMobileBottomNav';
 
@@ -61,6 +61,7 @@ export default function RestaurantLayout() {
 
           <div className="nav-group-title" style={{ padding: '1.5rem 0.5rem 0.5rem', fontSize: '0.7rem', fontWeight: 600, color: 'var(--text-tertiary)', textTransform: 'uppercase', letterSpacing: '0.05em' }}>System</div>
           <NavItem to="/restaurant/settings" icon={<Settings size={18} />} label="Settings" active={path === '/restaurant/settings'} />
+          <NavItem to="/" icon={<Home size={18} />} label="Back to Website" active={false} />
         </nav>
 
         <div className="resto-sidebar-footer" style={{ padding: '1.5rem', borderTop: '1px solid var(--glass-border)', background: 'var(--bg-tertiary)' }}>

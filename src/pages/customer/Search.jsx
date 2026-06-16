@@ -4,11 +4,12 @@ import { Search as SearchIcon, Filter, SlidersHorizontal, Flame, Star, Clock } f
 import { motion, AnimatePresence } from 'framer-motion';
 import RestaurantCard from '../../components/ui/RestaurantCard';
 import { useStore } from '../../store/useStore';
+import toast from 'react-hot-toast';
 
 export default function Search() {
   const [searchParams, setSearchParams] = useSearchParams();
   const query = searchParams.get('q') || '';
-  
+
   const restaurants = useStore(state => state.restaurants);
   const [localQuery, setLocalQuery] = useState(query);
   const [debouncedQuery, setDebouncedQuery] = useState(query);
@@ -24,14 +25,14 @@ export default function Search() {
 
   // Elite filtering logic (Memoized & Instant Search)
   const filtered = useMemo(() => {
-    let result = restaurants.filter(r => 
+    let result = restaurants.filter(r =>
       r.name.toLowerCase().includes(debouncedQuery.toLowerCase()) ||
       r.cuisine.some(c => c.toLowerCase().includes(debouncedQuery.toLowerCase()))
     );
 
-    if (activeFilter === 'Top Rated') result = result.sort((a,b) => b.rating - a.rating);
-    if (activeFilter === 'Fastest') result = result.sort((a,b) => a.deliveryTime - b.deliveryTime);
-    
+    if (activeFilter === 'Top Rated') result = result.sort((a, b) => b.rating - a.rating);
+    if (activeFilter === 'Fastest') result = result.sort((a, b) => a.deliveryTime - b.deliveryTime);
+
     return result;
   }, [restaurants, debouncedQuery, activeFilter]);
 
@@ -45,39 +46,39 @@ export default function Search() {
   return (
     <div style={{ paddingTop: '8rem', minHeight: '100vh', paddingBottom: '6rem', background: '#f9fafb' }}>
       <div className="container">
-        
+
         {/* Elite Search Header */}
-        <motion.div 
+        <motion.div
           initial={{ opacity: 0, y: -20 }}
           animate={{ opacity: 1, y: 0 }}
           style={{ textAlign: 'center', marginBottom: '4rem', maxWidth: '800px', margin: '0 auto 4rem auto' }}
         >
           <h1 style={{ fontSize: '3.5rem', marginBottom: '2rem', letterSpacing: '-0.04em', color: 'var(--text-primary)' }}>Explore Menus.</h1>
-          
-          <div className="search-input-wrapper" style={{ 
-            position: 'relative', 
-            background: 'var(--bg-elevated)', 
-            border: '1px solid #e5e7eb', 
-            borderRadius: '9999px', 
+
+          <div className="search-input-wrapper" style={{
+            position: 'relative',
+            background: 'var(--bg-elevated)',
+            border: '1px solid #e5e7eb',
+            borderRadius: '9999px',
             padding: '0.5rem',
             display: 'flex',
             alignItems: 'center',
             boxShadow: '0 10px 25px -5px rgba(0, 0, 0, 0.05)'
           }}>
             <SearchIcon size={24} style={{ marginLeft: '1.5rem', color: '#9ca3af' }} />
-            <input 
-              type="text" 
+            <input
+              type="text"
               value={localQuery}
               onChange={(e) => setLocalQuery(e.target.value)}
-              placeholder="Search for restaurants or dishes..." 
+              placeholder="Search for restaurants or dishes..."
               style={{
                 background: 'transparent', border: 'none', color: 'var(--text-primary)', flex: 1, padding: '1rem', fontSize: '1.2rem', outline: 'none', fontWeight: 500
               }}
               onKeyDown={(e) => {
-                if(e.key === 'Enter') setSearchParams({ q: localQuery });
+                if (e.key === 'Enter') setSearchParams({ q: localQuery });
               }}
             />
-            <button 
+            <button
               className="search-btn"
               style={{ padding: '1rem 2.5rem', fontSize: '1.1rem', background: '#111827', color: '#ffffff', borderRadius: '9999px', border: 'none', fontWeight: 600, cursor: 'pointer', transition: 'background 0.2s' }}
               onClick={() => setSearchParams({ q: localQuery })}
@@ -123,12 +124,12 @@ export default function Search() {
           <h2 style={{ fontSize: '1.8rem', fontWeight: 700, color: 'var(--text-primary)' }}>
             {filtered.length} {filtered.length === 1 ? 'Result' : 'Results'} found
           </h2>
-          <button style={{ display: 'flex', gap: '0.5rem', alignItems: 'center', background: 'var(--bg-elevated)', border: '1px solid #e5e7eb', padding: '0.5rem 1rem', borderRadius: '8px', color: 'var(--text-secondary)', fontWeight: 500, cursor: 'pointer', boxShadow: '0 1px 2px rgba(0,0,0,0.05)' }}>
+          <button onClick={() => toast(' Advanced filters coming soon!', { icon: '⚙️' })} style={{ display: 'flex', gap: '0.5rem', alignItems: 'center', background: 'var(--bg-elevated)', border: '1px solid #e5e7eb', padding: '0.5rem 1rem', borderRadius: '8px', color: 'var(--text-secondary)', fontWeight: 500, cursor: 'pointer', boxShadow: '0 1px 2px rgba(0,0,0,0.05)' }}>
             <SlidersHorizontal size={18} /> Filters
           </button>
         </div>
 
-        <motion.div 
+        <motion.div
           className="grid-cols-4"
         >
           <AnimatePresence>
@@ -147,7 +148,7 @@ export default function Search() {
         </motion.div>
 
         {filtered.length === 0 && (
-          <motion.div 
+          <motion.div
             initial={{ opacity: 0 }} animate={{ opacity: 1 }}
             style={{ textAlign: 'center', padding: '6rem 0', color: '#9ca3af' }}
           >

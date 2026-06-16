@@ -162,7 +162,7 @@ export default function PartnerPage() {
             {/* Simple Grid of 3 top restaurants */}
             <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '2rem' }}>
               {restaurants.slice(0, 3).map((r) => (
-                <div key={r.id} onClick={() => navigate(`/customer/restaurant/${r.id}`)} style={{ cursor: 'pointer', background: 'var(--bg-elevated)', borderRadius: '20px', overflow: 'hidden', border: '1px solid var(--glass-border)', transition: 'transform 0.2s', boxShadow: '0 4px 12px rgba(0,0,0,0.03)' }} onMouseEnter={e => e.currentTarget.style.transform = 'translateY(-4px)'} onMouseLeave={e => e.currentTarget.style.transform = 'translateY(0)'}>
+                <button aria-label={`View ${r.name}`} key={r.id} onClick={() => navigate(`/customer/restaurant/${r.id}`)} style={{ appearance: 'none', textAlign: 'left', display: 'block', width: '100%', cursor: 'pointer', background: 'var(--bg-elevated)', borderRadius: '20px', overflow: 'hidden', border: '1px solid var(--glass-border)', transition: 'transform 0.2s', boxShadow: '0 4px 12px rgba(0,0,0,0.03)' }} onMouseEnter={e => e.currentTarget.style.transform = 'translateY(-4px)'} onMouseLeave={e => e.currentTarget.style.transform = 'translateY(0)'}>
                    <div style={{ height: '200px', overflow: 'hidden' }}>
                       <img src={r.coverImage} alt={r.name} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
                    </div>
@@ -170,7 +170,7 @@ export default function PartnerPage() {
                       <h3 style={{ margin: '0 0 0.5rem', fontSize: '1.25rem', fontWeight: 800, color: 'var(--text-primary)' }}>{r.name}</h3>
                       <p style={{ margin: 0, color: 'var(--text-secondary)', fontSize: '0.9rem' }}>{r.cuisine.join(', ')} • ★ {r.rating}</p>
                    </div>
-                </div>
+                </button>
               ))}
             </div>
          </div>
