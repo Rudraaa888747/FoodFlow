@@ -10,7 +10,6 @@ export default function RestaurantLayout() {
   const location = useLocation();
   const path = location.pathname;
   const user = useStore(state => state.user);
-  const logout = useStore(state => state.logout);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -79,7 +78,7 @@ export default function RestaurantLayout() {
               <p style={{ fontSize: '0.7rem', color: 'var(--text-secondary)' }}>Admin Portal</p>
             </div>
           </div>
-          <div onClick={() => { logout(); navigate('/landing'); }} style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', color: 'var(--text-secondary)', fontSize: '0.85rem', fontWeight: 500, transition: 'color var(--transition-fast)', cursor: 'pointer' }} onMouseOver={e => e.currentTarget.style.color = 'var(--danger)'} onMouseOut={e => e.currentTarget.style.color = 'var(--text-secondary)'}>
+          <div onClick={() => { navigate('/landing'); }} style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', color: 'var(--text-secondary)', fontSize: '0.85rem', fontWeight: 500, transition: 'color var(--transition-fast)', cursor: 'pointer' }} onMouseOver={e => e.currentTarget.style.color = 'var(--danger)'} onMouseOut={e => e.currentTarget.style.color = 'var(--text-secondary)'}>
             <LogOut size={16} /> Log out
           </div>
         </div>

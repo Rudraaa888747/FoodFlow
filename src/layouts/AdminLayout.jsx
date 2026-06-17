@@ -8,7 +8,6 @@ export default function AdminLayout() {
   const location = useLocation();
   const path = location.pathname;
   const [isMobile, setIsMobile] = useState(window.innerWidth <= 900);
-  const logout = useStore(s => s.logout);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -52,7 +51,7 @@ export default function AdminLayout() {
                 <p className="text-secondary" style={{ fontSize: '0.8rem' }}>HQ Team</p>
               </div>
             </div>
-            <div onClick={() => { logout(); navigate('/landing'); }} style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', color: 'var(--danger)', fontSize: '0.9rem', cursor: 'pointer' }}>
+            <div onClick={() => { navigate('/landing'); }} style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', color: 'var(--danger)', fontSize: '0.9rem', cursor: 'pointer' }}>
               <LogOut size={16} /> Exit Portal
             </div>
           </div>

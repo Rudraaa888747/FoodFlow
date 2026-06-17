@@ -336,7 +336,7 @@ export default function Profile() {
             <div style={{ flex: 1 }} />
             <motion.button
               whileTap={{ scale: 0.96 }}
-              onClick={() => { logout(); navigate('/landing'); }}
+              onClick={() => { navigate('/landing'); }}
               style={{
                 display: 'flex', alignItems: 'center', gap: '0.4rem',
                 background: 'transparent', border: '1.5px solid #F0EFEC',
