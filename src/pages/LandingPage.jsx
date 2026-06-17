@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import {
   Utensils, ArrowRight, Star, Menu, X, ChevronRight,
@@ -71,6 +71,8 @@ export default function LandingPage() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [navSolid, setNavSolid] = useState(false);
   const user = useStore(state => state.user);
+  const logout = useStore(state => state.logout);
+  const navigate = useNavigate();
 
   /* ── Scroll-aware nav ──────────────────────────────────── */
   useEffect(() => {
@@ -144,7 +146,11 @@ export default function LandingPage() {
             <Link to="/customer" className="lp-nav-link">Order food</Link>
             <Link to="/restaurant" className="lp-nav-link">For restaurants</Link>
             <Link to="/admin" className="lp-nav-link">Admin</Link>
-            {!user && <Link to="/auth" className="lp-nav-cta">Sign in</Link>}
+            {!user ? (
+              <Link to="/auth" className="lp-nav-cta">Sign in</Link>
+            ) : (
+              <button onClick={() => { logout(); navigate('/'); }} className="lp-nav-cta" style={{ border: 'none', cursor: 'pointer', fontFamily: 'inherit' }}>Log out</button>
+            )}
           </div>
 
           {/* Mobile hamburger */}
@@ -192,10 +198,18 @@ export default function LandingPage() {
                 <ChevronRight size={18} />
               </Link>
               <div className="lp-menu-divider" />
-              {!user && (
+              {!user ? (
                 <Link to="/auth" className="lp-menu-signin" onClick={() => setIsMenuOpen(false)}>
                   Sign in to your account
                 </Link>
+              ) : (
+                <button 
+                  onClick={() => { logout(); navigate('/'); setIsMenuOpen(false); }} 
+                  className="lp-menu-signin" 
+                  style={{ background: 'transparent', border: 'none', cursor: 'pointer', textAlign: 'left', width: '100%', fontFamily: 'inherit', padding: 0 }}
+                >
+                  Log out
+                </button>
               )}
             </motion.div>
           </motion.div>

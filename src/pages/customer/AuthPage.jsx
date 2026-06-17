@@ -138,7 +138,14 @@ export default function AuthPage() {
   const login = useStore(s => s.login);
   const registerUser = useStore(s => s.registerUser);
   const verifyUser = useStore(s => s.verifyUser);
+  const user = useStore(s => s.user);
   const navigate = useNavigate();
+
+  useEffect(() => {
+    if (user) {
+      navigate('/landing');
+    }
+  }, [user, navigate]);
 
   const handleSubmit = (e) => {
     e.preventDefault();

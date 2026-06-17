@@ -1,12 +1,15 @@
 import React, { useEffect, useState } from 'react';
-import { Outlet, Link, useLocation } from 'react-router-dom';
+import { Outlet, Link, useLocation, useNavigate } from 'react-router-dom';
 import { LayoutDashboard, Users, Store, Bike, FileText, Settings, ShieldAlert, LogOut, Package, Home } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
+import { useStore } from '../store/useStore';
 
 export default function AdminLayout() {
   const location = useLocation();
   const path = location.pathname;
   const [isMobile, setIsMobile] = useState(window.innerWidth <= 900);
+  const logout = useStore(s => s.logout);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const onResize = () => setIsMobile(window.innerWidth <= 900);
@@ -49,9 +52,9 @@ export default function AdminLayout() {
                 <p className="text-secondary" style={{ fontSize: '0.8rem' }}>HQ Team</p>
               </div>
             </div>
-            <Link to="/" style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', color: 'var(--danger)', fontSize: '0.9rem' }}>
+            <div onClick={() => { logout(); navigate('/landing'); }} style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', color: 'var(--danger)', fontSize: '0.9rem', cursor: 'pointer' }}>
               <LogOut size={16} /> Exit Portal
-            </Link>
+            </div>
           </div>
         </aside>
       )}

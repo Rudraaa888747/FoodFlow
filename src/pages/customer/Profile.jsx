@@ -336,7 +336,7 @@ export default function Profile() {
             <div style={{ flex: 1 }} />
             <motion.button
               whileTap={{ scale: 0.96 }}
-              onClick={() => { logout(); navigate('/customer'); }}
+              onClick={() => { logout(); navigate('/landing'); }}
               style={{
                 display: 'flex', alignItems: 'center', gap: '0.4rem',
                 background: 'transparent', border: '1.5px solid #F0EFEC',
@@ -372,7 +372,7 @@ export default function Profile() {
 
           {/* ════ SETTINGS ══════════════════════════════════════════════════ */}
           {tab === 'settings' && (
-            <motion.div key="settings" variants={stagger} initial="hidden" animate="show" exit={{ opacity: 0 }}>
+            <motion.div key="settings" variants={stagger} initial="hidden" animate="show" exit={{ opacity: 0 }} className="mobile-settings-center">
               <AccountSettings user={user} setActiveSettingModal={setActiveSettingModal} />
               <div style={{ display: 'flex', justifyContent: 'center', marginTop: '1rem' }}>
                 <button onClick={() => setActiveSettingModal('delete')} aria-label="Delete Account" style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', color: '#FF4D2E', background: 'none', border: 'none', fontWeight: 700, fontSize: '0.9rem', cursor: 'pointer' }}>
@@ -517,7 +517,7 @@ export default function Profile() {
               </p>
               <div style={{ display: 'flex', gap: '0.75rem' }}>
                 <button onClick={() => setActiveSettingModal(null)} style={{ flex: 1, padding: '0.9rem', borderRadius: '12px', background: 'var(--bg-primary)', color: 'var(--text-primary)', border: '1px solid #E8E7E4', fontWeight: 700, cursor: 'pointer' }}>Cancel</button>
-                <button onClick={() => { logout(); navigate('/customer'); }} style={{ flex: 1, padding: '0.9rem', borderRadius: '12px', background: '#FF4D2E', color: '#fff', border: 'none', fontWeight: 700, cursor: 'pointer' }}>Delete</button>
+                <button onClick={() => { logout(); navigate('/landing'); }} style={{ flex: 1, padding: '0.9rem', borderRadius: '12px', background: '#FF4D2E', color: '#fff', border: 'none', fontWeight: 700, cursor: 'pointer' }}>Delete</button>
               </div>
             </div>
           </SettingModal>
@@ -529,6 +529,20 @@ export default function Profile() {
         input[type=number]::-webkit-outer-spin-button { -webkit-appearance: none; }
         input[type=number] { -moz-appearance: textfield; }
         ::-webkit-scrollbar { display: none; }
+        
+        @media (max-width: 768px) {
+          .mobile-settings-center {
+            margin: 0 auto;
+            max-width: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+          }
+          .mobile-settings-center > * {
+            width: 100%;
+            max-width: 400px;
+          }
+        }
       `}</style>
     </div>
   );
